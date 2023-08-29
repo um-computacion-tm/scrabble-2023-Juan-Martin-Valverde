@@ -1,6 +1,6 @@
 import unittest
 
-from GameModels import (
+from game.Models import (
     
     Tile,
     
@@ -9,8 +9,6 @@ from GameModels import (
     )
 
 from unittest.mock import patch
-
-
 
 
 
@@ -102,6 +100,8 @@ class TestBagTiles(unittest.TestCase):
             101,
 
         )
+
+
 
 if __name__ == '__main__':
 
