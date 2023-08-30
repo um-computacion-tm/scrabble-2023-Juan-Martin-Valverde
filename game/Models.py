@@ -132,4 +132,67 @@ class BagTiles:
 
         self.tiles.extend(tiles)
         
-        
+
+class Cell:
+
+    def __init__(self, multiplier, multiplier_type):
+
+        self.multiplier = multiplier
+
+        self.multiplier_type = multiplier_type
+
+        self.letter = None
+
+
+
+    def add_letter(self, letter:Tile):
+
+        self.letter = letter
+
+
+
+    def calculate_value(self):
+
+        if self.letter is None:
+
+            return 0
+
+        if self.multiplier_type == 'letter':
+
+            return self.letter.value * self.multiplier
+
+        else:
+
+            return self.letter.value
+
+
+
+class Board:
+    def __init__(self):
+        self.grid = [
+        [ Cell(self.get_multiplier(row, col)) for col in range(15) ]
+            for row in range(15) 
+            
+        ]
+    def get_multiplier(self, row, col):
+      
+            if (row, col) == (0, 0):
+                return 'x3'
+            elif (row, col) == (0, 7):
+                return 'x2'
+            else:
+                return 'x1'        
+            
+
+class Player:
+    def __init__(self):
+        self.tiles = []
+
+
+class ScrabbleGame:
+    def __init__(self, players_count):
+        self.board = Board()
+        self.bag_tiles = BagTiles()
+        self.players = []
+        for _ in range(players_count):
+            self.players.append(Player())
