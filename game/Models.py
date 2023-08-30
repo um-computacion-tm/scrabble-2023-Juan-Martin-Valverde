@@ -143,46 +143,36 @@ class Cell:
 
         self.letter = None
 
-
-
     def add_letter(self, letter:Tile):
 
         self.letter = letter
 
-
-
-    def calculate_value(self):
-
-        if self.letter is None:
-
+    def calculate_multipier(self):
+        
+        if self.letter is None: 
             return 0
-
+        
         if self.multiplier_type == 'letter':
-
             return self.letter.value * self.multiplier
-
+        
         else:
-
             return self.letter.value
-
-
-
+         
 class Board:
     def __init__(self):
         self.grid = [
-        [ Cell(self.get_multiplier(row, col)) for col in range(15) ]
-            for row in range(15) 
-            
+            [Cell(self.multiplier(row, col)) for col in range(15)]
+            for row in range(15)
         ]
-    def get_multiplier(self, row, col):
-      
-            if (row, col) == (0, 0):
-                return 'x3'
-            elif (row, col) == (0, 7):
-                return 'x2'
-            else:
-                return 'x1'        
-            
+
+    def multiplier(self, row, col):
+        if (row, col) == (0, 0):
+            return 'x3'
+        elif (row, col) == (0, 7):
+            return 'x2'
+        else:
+            return 'x1'
+   
 
 class Player:
     def __init__(self):
@@ -196,3 +186,33 @@ class ScrabbleGame:
         self.players = []
         for _ in range(players_count):
             self.players.append(Player())
+    
+    
+class ScrabbleGame:
+    def __init__(self, players_count):
+        self.board = Board()
+        self.bag_tiles = BagTiles()
+        self.players = []
+        for _ in range(players_count):
+            self.players.append(Player())
+
+    def calculate_word_score(self, word, start_row, start_col, direction):
+        score = 0
+        word_multiplier = 1
+
+        for i, letter in enumerate(word):
+            row = start_row + (i * direction[0])
+            col = start_col + (i * direction[1])
+            cell = self.board.grid[row][col]
+
+            letter_value = letter.value
+            cell_multiplier = 1
+
+            if cell.multiplier_type == 'letter':
+                cell_multiplier = cell.multiplier
+            elif cell.multiplier_type == 'word':
+                word_multiplier *= cell.multiplier
+
+            score += letter_value * cell_multiplier
+
+        return score * word_multiplier

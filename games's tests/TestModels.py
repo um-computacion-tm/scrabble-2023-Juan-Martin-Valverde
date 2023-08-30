@@ -12,8 +12,8 @@ from game.Models import (
     
     Player,
     
-    ScrabbleGame
-    
+    ScrabbleGame,
+        
     )
 
 
@@ -22,73 +22,39 @@ from unittest.mock import patch
 
 class TestTiles(unittest.TestCase):
 
-    def test_tile(self):
+    def test_tile_creation():
+        tile_a = Tile('A', 1)
+        tile_b = Tile('B', 3)
+        tile_blank = Tile(' ', 0)
 
-        tile = Tile('A', 1)
+        assert tile_a.letter == 'A'
+        assert tile_a.value == 1
 
-        self.assertEqual(tile.letter, 'A')
+        assert tile_b.letter == 'B'
+        assert tile_b.value == 3
 
-        self.assertEqual(tile.value, 1)
+        assert tile_blank.letter == ' '
+        assert tile_blank.value == 0
+
 
 
 class TestBagTiles(unittest.TestCase):
 
-    @patch('random.shuffle')
-
-    def test_bag_tiles(self, patch_shuffle):
-
+   def test_bag_tiles():
         bag = BagTiles()
 
-        self.assertEqual(
+        taken_tiles = bag.take(7)
 
-            len(bag.tiles),
+        assert len(taken_tiles) == 7
 
-            99,
+        bag.put(taken_tiles)
 
-        )
+        more_taken_tiles = bag.take(5)
 
-        self.assertEqual(
+        assert len(more_taken_tiles) == 5
 
-            patch_shuffle.call_count,
-
-            1,
-
-        )
-
-        self.assertEqual(
-
-            patch_shuffle.call_args[0][0],
-
-            bag.tiles,
-
-        )
-
-
-
-
-    def test_take(self):
-
-        bag = BagTiles()
-
-        tiles = bag.take(2)
-
-        self.assertEqual(
-
-            len(bag.tiles),
-
-            97,
-
-        )
-
-        self.assertEqual(
-
-            len(tiles),
-
-            2,
-
-        )
-
-
+    
+    
 class TestBoard(unittest.TestCase):
     def test_init(self):
         board = Board()
@@ -100,7 +66,6 @@ class TestBoard(unittest.TestCase):
             len(board.grid[0]),
             15,
         )
-
 
     def test_put(self):
 
@@ -121,38 +86,24 @@ class TestBoard(unittest.TestCase):
 
 class TestCell(unittest.TestCase):
 
-    def test_init(self):
-
-        cell = Cell(multiplier=2, multiplier_type='letter')
-
-
-
-        self.assertEqual(
-
-            cell.multiplier,
-
-            2,
-
-        )
-
-        self.assertEqual(
-
-            cell.multiplier_type,
-
-            'letter',
-
-        )
-
-        self.assertIsNone(cell.letter)
-
-        self.assertEqual(
-
-            cell.calculate_value(),
-
-            0,
-
-        )
-
+    def test_cell():
+        tile_a = Tile('A', 1)
+        tile_b = Tile('B', 3)
+        
+        cell_letter = Cell(2, 'letter')
+        cell_word = Cell(3, 'word')
+        
+        cell_letter.add_letter(tile_a)
+        cell_word.add_letter(tile_b)
+        
+        assert cell_letter.calculate_multiplier() == 2
+        assert cell_word.calculate_multiplier() == 9
+        
+        
+        empty_cell = Cell(2, 'letter')
+        assert empty_cell.calculate_multiplier() == 0
+        
+        
 
 class TestPlayer(unittest.TestCase):
     def test_init(self):
@@ -172,6 +123,17 @@ class TestScrabbleGame(unittest.TestCase):
             3,
         )
         self.assertIsNotNone(scrabble_game.bag_tiles)        
+
+
+class TestCalculateWordValue(unittest.TestCase):
+    def TestCalculateWordValue(self):
+        word = [
+        Cell(letter=Tile('C', 1)),
+        Cell(letter=Tile('A', 1)),
+        Cell(letter=Tile('S', 2)), 
+        Cell(letter=Tile('A', 1)),
+        ]
+
 if __name__ == '__main__':
 
     unittest.main()
