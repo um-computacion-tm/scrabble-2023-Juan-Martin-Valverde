@@ -1,21 +1,9 @@
 import unittest
 
-from game.Models import (
+from game.tile import Tile
+from game.bagtiles import BagTiles
+from game.cells import Cell
     
-    Tile,
-    
-    BagTiles,
-    
-    Board,
-    
-    Cell,
-    
-    Player,
-    
-    ScrabbleGame,
-        
-    )
-
 
 from unittest.mock import patch
 
@@ -133,6 +121,10 @@ class TestCalculateWordValue(unittest.TestCase):
         Cell(letter=Tile('S', 2)), 
         Cell(letter=Tile('A', 1)),
         ]
+        
+class Dictionary:
+    def __init__(self, file_path='diccionario.txt'):
+        self.file_path = file_path
 
 if __name__ == '__main__':
 
