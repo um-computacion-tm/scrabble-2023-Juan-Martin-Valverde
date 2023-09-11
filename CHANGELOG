@@ -1,0 +1,49 @@
+ScrabbleGame by Juan Martin Valverde Blasco
+
+VERSION 1.0
+-It was the beggining version of this proyect I adde the bagtile which is supose to contain all the letter of the game and the class tile whis is the constructor of the letters 
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+VERSION 1.1
+-All letter were added whit its score points and i test them in my envioretment so from this version this game is supose to have no bugs in it
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+VERSION 1.2
+-The file cells was added it supose to be the constructor of what its going to be your playing board
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+VERSION 1.3
+-The file board was added its the manager of cell and it define the size of your playing board (if you want it to be bigger get inside that file an modify the line num 12 whit your own parameters REMEMBER THAT THE MULPLIERS ARE DIFINED ON ESPECIFIC PARTS OF THE BOARD SO THE NEW CELLS WONT HAVE MULTIPLIERS)
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+VERSION 1.4
+-The file player was added it is you constructor it define what are you and what you can do
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+VERSION 1.5
+-The scrabblegame file was added it split and manage all the other files to make the game work fine
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+VERSION 1.6
+-The function multiplier was added it is in charge of difine the value of each cells and multipli its value whit the letter's value
+-As you can see i decide to join all the files in one (it is just a test to see how do i like it more)
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+VERSION 1.7
+-The function score counter was added it sum the value of the letter that made a word and return the final value
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+VERSION 1.9
+-The dictionari thats supose to check if the word exist was added
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Version 2.0
+-The file main menu was added its what you are goig to interact it will ask you how many player will be in this match (max 4) and will show your letter rack (more funcitonalities will be added in new releases)

@@ -1,21 +1,9 @@
 import unittest
 
-from game.Models import (
+from game.tile import Tile
+from game.bagtiles import BagTiles
+from game.cells import Cell
     
-    Tile,
-    
-    BagTiles,
-    
-    Board,
-    
-    Cell,
-    
-    Player,
-    
-    ScrabbleGame,
-        
-    )
-
 
 from unittest.mock import patch
 
