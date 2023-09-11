@@ -4,7 +4,7 @@ source =
     test
 omit =
     env/*
-    /test
+    */test*
     */__init__.py
 [repot]
 
