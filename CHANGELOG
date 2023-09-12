@@ -46,4 +46,16 @@ VERSION 1.9
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Version 2.0
--The file main menu was added its what you are goig to interact it will ask you how many player will be in this match (max 4) and will show your letter rack (more funcitonalities will be added in new releases)
+-The file main menu was added its what you are goig to interact lit will ask you how many player will be in this match (max 4) and will show your letter rack (more funcitonalities will be added in new releases)
+-And as you can see i finally decide that all classes should be on diferent clases but dont worry the only diference is the main menu
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+VERSION 2.1
+-The funcition endgame was added it checks if the rack of a player is empty and print on the scream whit player id won and how many point do he had
+-To make the final score work i added a function that show the score of the winner 
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+VERSION 2.2
+-The function draw was added in player now you can have the tiles to start the match (7)

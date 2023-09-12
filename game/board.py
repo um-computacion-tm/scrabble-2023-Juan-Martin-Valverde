@@ -2,7 +2,7 @@
 
 from game.cells import Cell
 from game.bagtiles import BagTiles
-from game.tile import Tile
+from game.tiles import Tile
 from game.dictionary import Dictionary
 
 
@@ -41,3 +41,6 @@ class Board:
         for _ in list:
             sum = sum * word[_].multiplier 
         return sum
+    
+if __name__ == '__main__':
+    pass
