@@ -9,7 +9,7 @@ from game.dictionary import Dictionary
 class Board:
     def __init__(self):
         self.grid = [
-            [ Cell(1, 'letter') for _ in range(15) ]
+            [ Cell(1, '') for _ in range(15) ]
             for _ in range(15)
         ]
 

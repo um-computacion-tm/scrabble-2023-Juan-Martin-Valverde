@@ -26,8 +26,8 @@ def main():
     print("WELLCOME TO SCRABBLE, by Juan Martin Valverde")
 
     players = validate_number_of_players()
-    scrabble_game = ScrabbleGame(players)
-    scrabble_game.begin_Match()
+    ScrabbleGame = ScrabbleGame(players)
+    ScrabbleGame.begin_Match()
 
 if __name__ == '__main__':
     main()
