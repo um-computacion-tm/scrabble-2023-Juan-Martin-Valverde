@@ -1,7 +1,7 @@
 import unittest
 
 from game.bagtiles import BagTiles
-from game.tile import Tile
+from game.tiles import Tile
 from unittest.mock import patch
 
 class TestBagTiles(unittest.TestCase):

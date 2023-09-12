@@ -2,14 +2,14 @@
 
 from game.cells import Cell
 from game.bagtiles import BagTiles
-from game.tile import Tile
+from game.tiles import Tile
 from game.dictionary import Dictionary
 
 
 class Board:
     def __init__(self):
         self.grid = [
-            [ Cell(1, '') for _ in range(15) ]
+            [ Cell(1, 'letter') for _ in range(15) ]
             for _ in range(15)
         ]
 

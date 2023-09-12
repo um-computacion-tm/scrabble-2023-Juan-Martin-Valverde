@@ -1,7 +1,7 @@
 import unittest
 from game.board import Board
 from game.cells import Cell
-from game.tile import Tile
+from game.tiles import Tile
 
 class TestBoard(unittest.TestCase):
     def test_init(self):

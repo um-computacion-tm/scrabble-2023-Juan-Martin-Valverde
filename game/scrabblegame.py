@@ -1,7 +1,8 @@
 from game.board import Board
 from game.player import Player
 from game.bagtiles import BagTiles
-from game.tile import Tile  
+from game.cells import Cell 
+from game.tiles import Tile
 
 
 class ScrabbleGame:
@@ -13,6 +14,7 @@ class ScrabbleGame:
             self.players.append(Player())
 
         self.current_player = None
+    
     def calculate_final_score(self, player):
         score = 0
         for row in self.board.grid:
@@ -24,6 +26,7 @@ class ScrabbleGame:
             score += tile.value
 
         return score
+    
     def begin_Match(self):
         for player in self.players:
             tilesToDraw = 7 - len(player.tiles)
@@ -43,9 +46,9 @@ class ScrabbleGame:
             self.end_game()
 
     def end_game(self):
-        print("El juego ha terminado.")
+        print("The game is over.")
         for player in self.players:
-            print(f"Puntuación del Jugador {player.ID}: {self.calculate_final_score(player)}")
+            print(f"The finall score of {player.ID} is {self.calculate_final_score(player)}")
 
     def calculate_word_score(self, word, start_row, start_col, direction):
         score = 0
