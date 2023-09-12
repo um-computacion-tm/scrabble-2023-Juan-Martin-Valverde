@@ -41,3 +41,6 @@ class Board:
         for _ in list:
             sum = sum * word[_].multiplier 
         return sum
+    
+if __name__ == '__main__':
+    pass

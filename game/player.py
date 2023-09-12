@@ -11,9 +11,9 @@ class Player:
             for tile in word:
                 self.tiles.remove(tile)
             return True
-    def __init__(self, id=int):
+    def __init__(self, ID=int):
         self.tiles = []
-        self.id = id
+        self.id = ID
         
     def take_Tiles(self, tiles):
         for tile in tiles:
