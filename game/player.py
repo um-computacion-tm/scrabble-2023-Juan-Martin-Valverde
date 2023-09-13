@@ -29,7 +29,23 @@ class Player:
         new_tiles = bag.take(len(replaced_tiles))
         self.tiles.extend(new_tiles)
         bag.put(replaced_tiles)
-        
+    
+    def give_Tiles(self, letters):
+        rackBackUp = self.rack.copy()
+        tiles = []
+        for i in range(len(letters)):
+            letterIndex = -1
+            for j in range(7 - i):
+                if self.rack[j].letter == letters[i].upper(): 
+                    letterIndex = j
+                    break
+            
+            if letterIndex == -1:
+                self.rack = rackBackUp
+                raise MissingTileInRackException(letters[i] + " letter missing in rack.")
+            else:
+                tiles.append(self.rack.pop(letterIndex))
+        return tiles   
     def get_rack(self):
         return self.tiles
 
