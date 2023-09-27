@@ -1,4 +1,5 @@
 from game.tiles import Tile
+from game.bagtiles import  BagTiles
 class MissingTileInRackException(Exception):
     pass
 
@@ -21,7 +22,7 @@ class Player:
         replaced_tiles = []
         for letter in letters:
             for tile in self.tiles:
-                if tile.Tile == letter:
+                if tile == letter:
                     self.tiles.remove(tile)
                     replaced_tiles.append(tile)
                     break
