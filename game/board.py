@@ -28,7 +28,7 @@ class Board:
             
 
 
-    def calculate_word_score(self, word, start_row, start_col, direction, letter:Tile):
+    def calculate_word_score(self, word, start_row,start_col, direction, letter:Tile):
         score = 0
         word_multiplier = 1
 
