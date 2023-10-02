@@ -48,7 +48,7 @@ class ScrabbleGame:
     def end_game(self):
         print("The game is over.")
         for player in self.players:
-            print(f"The finall score of {player.ID} is {self.calculate_final_score(player)}")
+            print(f"The finall score of {player.id} is {self.calculate_final_score(player)}")
 
     def calculate_word_score(self, word, start_row, start_col, direction):
         score = 0
