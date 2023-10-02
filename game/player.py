@@ -7,7 +7,7 @@ class Player:
     def __init__(self, player_id):
         self.tiles = []
         self.player_id = player_id
-
+        player_id = id
     def play_word(self, word):
         if not all(tile in self.tiles for tile in word):
             raise ValueError("El jugador no tiene las fichas necesarias.")
