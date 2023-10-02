@@ -4,10 +4,57 @@ from game.cells import Cell
 from game.tiles import Tile
 
 class TestBoard(unittest.TestCase):
+
     def test_init(self):
         board = Board()
-        self.assertEqual(len(board.grid),15,)
-        self.assertEqual(len(board.grid[0]),15,)
+        self.assertEqual(
+            len(board.grid),
+            15,
+        )
+        self.assertEqual(
+            len(board.grid[0]),
+            15,
+        )
+
+
+    def test_board_cell_00(self):
+        board = Board()
+        cell = board.grid
+        self.assertEqual(cell[0][0].multiplier,3 )
+        self.assertEqual(cell[0][0].multiplier_type,'word' )
+    
+    def test_board_cell_77(self):
+        board = Board()
+        cell = board.grid
+        self.assertEqual(cell[7][7].multiplier,2 )
+        self.assertEqual(cell[7][7].multiplier_type,'word' )
+
+    def test_put_word_horizontal(self):
+        board = Board()
+        position = [5,5]
+        orientation = 'H'
+        word = 'CASA'
+        board.put_words(word, position, orientation)
+        self.assertEqual(board.grid[4][4].letter, word[0])
+        self.assertEqual(board.grid[4][5].letter, word[1])
+        self.assertEqual(board.grid[4][6].letter, word[2])
+        self.assertEqual(board.grid[4][7].letter, word[3])
+
+    def test_put_word_vertical(self):
+        board = Board()
+        position = [5,5]
+        orientation = 'V'
+        word = [
+            Tile('C',1),
+            Tile('A',1),
+            Tile('S',1),
+            Tile('A',1),
+                ]
+        board.put_words(word, position, orientation)
+        self.assertEqual(board.grid[4][4].letter.letter, word[0].letter)
+        self.assertEqual(board.grid[5][4].letter.letter, word[1].letter)
+        self.assertEqual(board.grid[6][4].letter.letter, word[2].letter)
+        self.assertEqual(board.grid[7][4].letter.letter, word[3].letter)
 
 class TestCalculateWordValue(unittest.TestCase):
     def test_simple(self):

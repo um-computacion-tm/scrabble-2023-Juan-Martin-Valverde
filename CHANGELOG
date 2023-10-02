@@ -78,7 +78,10 @@ VERSION 2.5
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 VERSION 2.6
--This work is now reaching its final stage, now im working whit the errors i get from the unnittest that i made so the next updates will be about that
+-This work is now reaching its final stage, now im working whit the errors i get from the unnittest that i made so the next updates will be about that 17/26
 -I was readding the list that i have and y realice that i have to work whit the REA API for the dictionari and the cossline word(these ones scares me a lot i cant realice how to get it done) thoes will be the finals implementations and the las things that i would test in this proyect
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+VERSION 2.7 
+-More errors fixed and tests added 19/30
