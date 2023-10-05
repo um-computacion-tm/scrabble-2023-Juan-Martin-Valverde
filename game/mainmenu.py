@@ -29,5 +29,3 @@ def main():
     scrabble_game = ScrabbleGame(players)
     scrabble_game.begin_Match
 
-if __name__ == '__main__':
-    main()

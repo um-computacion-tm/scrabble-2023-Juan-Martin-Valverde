@@ -7,5 +7,3 @@ class TestTiles(unittest.TestCase):
         self.assertEqual(tile.letter, 'Z')
         self.assertEqual(tile.value, 10)
 
-if __name__ == '__main__':
-    unittest.main()

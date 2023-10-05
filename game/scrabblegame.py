@@ -71,5 +71,3 @@ class ScrabbleGame:
 
         return score * word_multiplier
     
-if __name__ == '__main__':
-    pass

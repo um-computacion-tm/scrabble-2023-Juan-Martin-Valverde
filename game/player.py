@@ -53,5 +53,3 @@ class Player:
     def get_player_id(self):
         return self.player_id
     
-if __name__ == '__main__':
-    pass

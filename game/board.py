@@ -5,8 +5,6 @@ from game.bagtiles import BagTiles
 from game.tiles import Tile
 from game.dictionary import Dictionary
 
-
-
 class Board:
     #defines the size of the table, the kind of multiplier and were they would be
     def __init__(self):
@@ -35,7 +33,7 @@ class Board:
             self.grid[2][6] = Cell(emptyCell, 2, 'letter')
             self.grid[7][3] = Cell(emptyCell, 2, 'letter')
     
-    #Let tha player put the word that he wants
+    #Let th player put the word that he wants
     def put_word(self, word, location, orientation):
         N = location[0] - 1
         M = location[1] - 1
@@ -46,7 +44,7 @@ class Board:
             elif orientation == 'V': 
                 N += 1
     
-    #As it name says it calculate the value of the word whit or whitout multiplier           
+    #As its name says it calculate the value of the word whit or whitout multiplier           
     def calculate_word_value(self, word, cell):
         word_value = 0
         word_multiplier = 1
@@ -60,8 +58,4 @@ class Board:
         return(word_value)
     
 class MissingTileInRackException(Exception):
-    pass
-
-    
-if __name__ == '__main__':
     pass

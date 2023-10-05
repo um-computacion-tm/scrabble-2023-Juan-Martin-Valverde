@@ -21,6 +21,4 @@ class Cell:
 
         else:
             return self.letter.value
-                
-if __name__ == '__main__':
-    pass
+        

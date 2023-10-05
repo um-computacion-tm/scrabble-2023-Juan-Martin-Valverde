@@ -67,6 +67,5 @@ class TestScrabbleGame(unittest.TestCase):
         Game.next_turn()
         self.assertEqual(Game.turn, 0)
         
-if __name__ == '__main__':
-    unittest.main()
+
     

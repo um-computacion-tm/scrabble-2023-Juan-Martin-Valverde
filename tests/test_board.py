@@ -17,17 +17,17 @@ class TestBoard(unittest.TestCase):
         )
 
 
-    def test_board_cell_00(self):
+    def test_board_cell_03(self):
         board = Board()
         cell = board.grid
-        self.assertEqual(cell[0][0].multiplier,3 )
-        self.assertEqual(cell[0][0].multiplier_type,'word' )
+        self.assertEqual(cell[0][3].multiplier,3 )
+        self.assertEqual(cell[0][3].multiplier_type,'word' )
     
-    def test_board_cell_77(self):
+    def test_board_cell_73(self):
         board = Board()
         cell = board.grid
-        self.assertEqual(cell[7][7].multiplier,2 )
-        self.assertEqual(cell[7][7].multiplier_type,'word' )
+        self.assertEqual(cell[7][3].multiplier,2 )
+        self.assertEqual(cell[7][3].multiplier_type,'word' )
 
     def test_put_word_horizontal(self):
         board = Board()
@@ -144,5 +144,3 @@ class TestCalculateWordValue(unittest.TestCase):
         self.assertEqual(value, 5)
     
     
-if __name__ == '__main__':
-    unittest.main()

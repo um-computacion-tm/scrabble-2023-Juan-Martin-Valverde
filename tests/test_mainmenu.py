@@ -36,5 +36,3 @@ class TestMain(unittest.TestCase):
         num_players = validate_number_of_players()
         self.assertEqual(num_players, 2)
 
-if __name__ == '__main__':
-    unittest.main
