@@ -85,3 +85,10 @@ VERSION 2.6
 
 VERSION 2.7 
 -More errors fixed and tests added 19/30
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+VERSION 2.8
+-Player upgraded 
+-Some clases from other were not being called, I read the file and was beacuse i doesn't defined were was called
+

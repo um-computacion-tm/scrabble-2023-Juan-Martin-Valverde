@@ -4,31 +4,39 @@ class MissingTileInRackException(Exception):
     pass
 
 class Player:
-    def __init__(self, player_id):
-        self.tiles = []
+    def __init__(self, player_id= None, bag_tiles = BagTiles):
+        
         self.player_id = player_id
-        player_id = id
+        self.player_tiles = bag_tiles
+        self.score = 0
+
+    def get_player_id(self):
+        return self.player_id
+    
+    def get_rack(self):
+        return self.player_tiles
+
     def play_word(self, word):
-        if not all(tile in self.tiles for tile in word):
+        if not all(tile in self.player_tiles for tile in word):
             raise ValueError("El jugador no tiene las fichas necesarias.")
         
         for tile in word:
-            self.tiles.remove(tile)
+            self.player_tiles.remove(tile = Tile)
 
     def take_tiles(self, tiles):
-        self.tiles.extend(tiles)
+        self.player_tiles.extend(tiles)
     
     def exchange_tiles(self, bag, letters):
         replaced_tiles = []
         for letter in letters:
-            for tile in self.tiles:
+            for tile in self.player_tiles:
                 if tile == letter:
-                    self.tiles.remove(tile)
+                    self.player_tiles.remove(tile)
                     replaced_tiles.append(tile)
                     break
 
         new_tiles = bag.take(len(replaced_tiles))
-        self.tiles.extend(new_tiles)
+        self.player_tiles.extend(new_tiles)
         bag.put(replaced_tiles)
     
     def give_Tiles(self, letters):
@@ -47,9 +55,5 @@ class Player:
             else:
                 tiles.append(self.rack.pop(letterIndex))
         return tiles   
-    def get_rack(self):
-        return self.tiles
 
-    def get_player_id(self):
-        return self.player_id
     
