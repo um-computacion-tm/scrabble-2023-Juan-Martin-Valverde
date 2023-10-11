@@ -34,7 +34,7 @@ class TestBoard(unittest.TestCase):
         position = [5,5]
         orientation = 'H'
         word = 'CASA'
-        board.put_words(word, position, orientation)
+        board.put_word(word, position, orientation)
         self.assertEqual(board.grid[4][4].letter, word[0])
         self.assertEqual(board.grid[4][5].letter, word[1])
         self.assertEqual(board.grid[4][6].letter, word[2])
@@ -50,7 +50,7 @@ class TestBoard(unittest.TestCase):
             Tile('S',1),
             Tile('A',1),
                 ]
-        board.put_words(word, position, orientation)
+        board.put_word(word, position, orientation)
         self.assertEqual(board.grid[4][4].letter.letter, word[0].letter)
         self.assertEqual(board.grid[5][4].letter.letter, word[1].letter)
         self.assertEqual(board.grid[6][4].letter.letter, word[2].letter)
@@ -98,8 +98,9 @@ class TestCalculateWordValue(unittest.TestCase):
         cell4 = Cell(multiplier=1,multiplier_type=False)
         cell4.add_letter(Tile('A', 1))
 
-        word = [cell1, cell2, cell3]
-        
+        word = [cell1, cell2, cell3, cell4]
+        value = Board().calculate_word_value(word)
+        self.assertEqual(value, 7)
 
     def test_with_word_multiplier(self):
         cell1 = Cell(multiplier=1,multiplier_type=False)

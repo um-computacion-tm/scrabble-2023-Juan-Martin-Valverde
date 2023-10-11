@@ -3,7 +3,8 @@ from game.tiles import  Tile
 
 class EmptyBagException(Exception):
     pass
-#This one defines what would be the total of tiles on the game
+#This one defines what would be the total of tiles on the game  sacar
+
 class BagTiles:
     def __init__(self):
         self.tiles = [
@@ -69,21 +70,18 @@ class BagTiles:
             Tile('Z', 10)                                                                               #1Z
         ]
         self.total_tiles = self.calculate_tiles()
-        random.shuffle(self.total_tiles)
+        random.shuffle(self.tiles)
 #It calculate the amount of tiles that are on the bagtile
     def calculate_tiles(self):
-        total_tiles = []
-        for letter, value, total in self.tiles:
-            total_tiles.extend([(letter, value)]* value)
-            return total_tiles
+        return len(self.tiles)
 #It let the player take one tile from the bag tile    
     def take(self, count):
         tiles = []
         for _ in range(count):
-            tiles.append(self.total_tiles.pop())
+            tiles.append(self.tiles.pop(_))
         return tiles
 #It let the palyer put one tile when he takes form the bagtile
     def put(self, tiles):
-        self.total_tiles.extend(tiles)
+        self.tiles.extend(tiles)
         
 

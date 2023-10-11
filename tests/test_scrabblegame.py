@@ -20,7 +20,7 @@ class TestScrabbleGame(unittest.TestCase):
 
     def test_next_turn(self):
         game = ScrabbleGame(players_count=3)
-        self.assertEqual(game.current_player, 0)
+        self.assertEqual(game.current_player, None)
         game.next_turn()
         self.assertEqual(game.current_player, 1)
         game.next_turn()
