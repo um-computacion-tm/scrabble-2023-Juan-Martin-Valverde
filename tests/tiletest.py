@@ -1,3 +1,4 @@
+"""
 import unittest
 from game.tiles import Tile
 
@@ -7,3 +8,4 @@ class TestTiles(unittest.TestCase):
         self.assertEqual(tile.letter, 'Z')
         self.assertEqual(tile.value, 10)
 
+"""

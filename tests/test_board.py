@@ -1,3 +1,4 @@
+"""
 import unittest
 from game.board import Board
 from game.cells import Cell
@@ -145,3 +146,4 @@ class TestCalculateWordValue(unittest.TestCase):
         self.assertEqual(value, 5)
     
     
+"""

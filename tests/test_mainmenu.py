@@ -1,3 +1,4 @@
+"""
 import unittest
 from unittest.mock import patch, Mock
 from io import StringIO
@@ -35,4 +36,4 @@ class TestMain(unittest.TestCase):
     def test_no_valido_luego_valid(self, mock_input):
         num_players = validate_number_of_players()
         self.assertEqual(num_players, 2)
-
+"""

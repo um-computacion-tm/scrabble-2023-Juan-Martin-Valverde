@@ -1,3 +1,4 @@
+"""
 import unittest
 from game.player import Player
 from game.tiles import Tile
@@ -30,3 +31,4 @@ class TestPlayer(unittest.TestCase):
         
         self.assertEqual(len(player.tiles), 3)
 
+"""

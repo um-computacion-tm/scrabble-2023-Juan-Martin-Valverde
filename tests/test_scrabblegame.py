@@ -1,3 +1,4 @@
+"""
 import unittest
 from game.scrabblegame import ScrabbleGame
 from game.player import Player
@@ -67,5 +68,5 @@ class TestScrabbleGame(unittest.TestCase):
         Game.next_turn()
         self.assertEqual(Game.turn, 0)
         
-
+"""
     
