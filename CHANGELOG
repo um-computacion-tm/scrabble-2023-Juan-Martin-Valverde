@@ -104,7 +104,15 @@ ________________________________________________________________________________
 
 VERSION 3.0
 
--%100 COVERTURE IN BAG TILE YEEAAAAAAH BOOOOOOOOOOIIIIIII
+-%100 COVERTURE IN TILES AND BAG TILE YEEAAAAAAH BOOOOOOOOOOIIIIIII
 -AND ALL TEST RUN CORRECT YEAAAAAA BOIIIIIIIIIII
+
+_______________________________________________________________________________________________________________________________________________________________________
+
+VERSION 3.1
+-%81 and %69 of coverture over cell and board file
+-Both of this files run and pass a good part of their test, i get 2 failures and 3 error of 27 tests
+-I dont know why the multiplier is bad aplied im struggling so bad whit that
+-I think that i will let it to consult class and continue working in the other files but i dont know if my actual problem whit multiplier will bother me whit the oter files
 
 _______________________________________________________________________________________________________________________________________________________________________

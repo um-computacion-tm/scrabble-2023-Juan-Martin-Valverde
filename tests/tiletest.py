@@ -1,4 +1,3 @@
-"""
 import unittest
 from game.tiles import Tile
 
@@ -7,5 +6,5 @@ class TestTiles(unittest.TestCase):
         tile = Tile('Z', 10)
         self.assertEqual(tile.letter, 'Z')
         self.assertEqual(tile.value, 10)
-
-"""
+    
+ 

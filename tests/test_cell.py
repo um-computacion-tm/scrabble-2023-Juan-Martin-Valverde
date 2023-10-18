@@ -1,34 +1,48 @@
-"""
 import unittest
-from game.cells import Cell
 from game.tiles import Tile
-
+from game.cells import Cell
 
 class TestCell(unittest.TestCase):
-    def test_init(self):
-        cell = Cell(multiplier=2, multiplier_type='letter')
-        self.assertEqual(cell.multiplier,2,) 
-        self.assertEqual(cell.multiplier_type,'letter')
-        self.assertIsNone(cell.letter)
-        self.assertEqual(cell.calculate_value(),0)
-
     def test_add_letter(self):
-        cell = Cell(multiplier=1, multiplier_type=None)
-        letter = Tile(letter='P', value=3)
-        cell.add_letter(letter=letter)
-        self.assertEqual(cell.letter, letter)
+        tile = Tile('A', 1)
+        cell = Cell()
+        cell.add_letter(tile)
+        self.assertEqual(cell.letter, tile)
+        self.assertFalse(cell.active)
 
-    def test_cell_value(self):
-        cell = Cell(multiplier=2, multiplierType='letter')
-        letter = Tile(letter='p', value=3)
-        cell.add_letter(letter=letter)
-        self.assertEqual( cell.calculate_value(),6,)
-        
-    def test_cell_multiplier_word(self):
-        cell = Cell (multiplier=2, multiplierType='word')
-        letter = Tile(letter='p', value=3)
-        cell.add_letter(letter=letter)
-        self.assertEqual(cell.calculate_value(),3,)        
-"""
+    def test_calculate_value_no_letter(self):
+        cell = Cell()
+        self.assertEqual(cell.calculate_value(), 0)
+
+    def test_calculate_value_letter_no_multiplier(self):
+        tile = Tile('A', 1)
+        cell = Cell()
+        cell.add_letter(tile)
+        self.assertEqual(cell.calculate_value(), 1)
+
+    def test_calculate_value_letter_multiplier_used(self):
+        tile = Tile('A', 1)
+        cell = Cell(multiplier=2, multiplier_type='letter', multiplier_used=True)
+        cell.add_letter(tile)
+        self.assertEqual(cell.calculate_value(), 1)
+    """
+    def test_calculate_value_letter_multiplier_not_used(self):
+        tile = Tile('A', 1)
+        cell = Cell(multiplier=2, multiplier_type='letter')
+        cell.add_letter(tile)
+        self.assertEqual(cell.calculate_value(), 2)
+    """
+    def test_calculate_value_word_multiplier_used(self):
+        tile = Tile('A', 1)
+        cell = Cell(multiplier=2, multiplier_type='word', multiplier_used=True)
+        cell.add_letter(tile)
+        self.assertEqual(cell.calculate_value(), 1)
+    """
+    def test_calculate_value_word_multiplier_not_used(self):
+        tile = Tile('A', 1)
+        cell = Cell(multiplier=2, multiplier_type='word', active=True, multiplier_used=False)
+        cell.add_letter(tile)
+        self.assertEqual(cell.calculate_value(), 2)
+    """
 
 
