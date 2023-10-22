@@ -1,29 +1,48 @@
-"""
 import unittest
 from game.scrabblegame import ScrabbleGame
 from game.player import Player
 from game.bagtiles import BagTiles
 
 class TestScrabbleGame(unittest.TestCase):
+    
+    def test_init(self):
+        scrabble_game = ScrabbleGame(players_count=3)
+        self.assertEqual(len(scrabble_game.players), 3)
+        self.assertIsNotNone(scrabble_game.board)
+        self.assertIsNotNone(scrabble_game.bag_tiles)
+    
     def test_init(self):
         scrabble_game = ScrabbleGame(players_count=3)
         self.assertIsNotNone(scrabble_game.board)
-        self.assertEqual(len(scrabble_game.players),3)
+        self.assertEqual(len(scrabble_game.players), 3)
         self.assertIsNotNone(scrabble_game.bag_tiles)
 
     def test_start_game(self):
-        player = Player()
-        game = ScrabbleGame(players_count = 3)
-        game.start_game()
+        game = ScrabbleGame(players_count=3)
+        game.begin_Match()
 
         for player in game.players:
-            self.assertEqual(len(player.tiles), 7)
-
+            self.assertEqual(len(player.player_rack), 7)
+    
+        """
+    def test_end_game(self):
+        game = ScrabbleGame(players_count=3)
+        game.begin_Match()
+        game.end_game()
+        self.assertEqual(game.current_player, None)
+        self.assertEqual(game.players[0].player_rack, [])
+        self.assertEqual(game.players[1].player_rack, [])
+        self.assertEqual(game.players[2].player_rack, [])
+        self.assertEqual(game.bag_tiles.tiles, [])
+    
+    
+    
+    
     def test_next_turn(self):
         game = ScrabbleGame(players_count=3)
         self.assertEqual(game.current_player, None)
         game.next_turn()
-        self.assertEqual(game.current_player, 1)
+        self.assertEqual(game.current_player, 0)
         game.next_turn()
         self.assertEqual(game.current_player, 2)
         game.next_turn()
@@ -31,15 +50,9 @@ class TestScrabbleGame(unittest.TestCase):
         game.next_turn()
         self.assertEqual(game.current_player, 1)
 
-    def test_init(self):
-        scrabble_game = ScrabbleGame(players_count=3)
-        self.assertIsNotNone(scrabble_game.board)
-        self.assertEqual(
-            len(scrabble_game.players),
-            3,
-        )
-        self.assertIsNotNone(scrabble_game.bag_tiles)
     
+    
+
     def test_turns_2players(self):
         Game = ScrabbleGame(2)
         self.assertEqual(Game.turn, 0)
@@ -48,6 +61,7 @@ class TestScrabbleGame(unittest.TestCase):
         Game.next_turn()
         self.assertEqual(Game.turn, 0)
     
+
     def test_turns_4players(self):
         Game = ScrabbleGame(4)
         self.assertEqual(Game.turn, 0)
@@ -68,5 +82,5 @@ class TestScrabbleGame(unittest.TestCase):
         Game.next_turn()
         self.assertEqual(Game.turn, 0)
         
-"""
+    """
     
