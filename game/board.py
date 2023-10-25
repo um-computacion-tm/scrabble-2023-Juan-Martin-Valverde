@@ -74,7 +74,7 @@ class Board:
         if orientation == 'H':
             if col + len(word) > 15:
                 return False
-        else:
+        else: 
             if row + len(word) > 15:
                 return False
         return True

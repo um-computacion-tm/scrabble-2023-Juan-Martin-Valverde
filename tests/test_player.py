@@ -33,7 +33,7 @@ class TestPlayer(unittest.TestCase):
 
         self.assertTrue(result)
         self.assertEqual(len(player.get_rack()), 1)
-    """
+    
     def test_take_tiles(self):
             player = Player(1)
             player.player_rack = [Tile('A', 1), Tile('B', 3), Tile('C', 3)]
@@ -43,7 +43,7 @@ class TestPlayer(unittest.TestCase):
 
             expected_rack = [Tile('A', 1), Tile('B', 3), Tile('C', 3), Tile('D', 2), Tile('E', 1)]
             self.assertEqual([str(tile) for tile in player.player_rack], [str(tile) for tile in expected_rack])
-    """    
+    
     """
     def test_give_tiles(self):
         player = Player(1)
