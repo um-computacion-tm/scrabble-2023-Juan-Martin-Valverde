@@ -135,6 +135,7 @@ VERSION 3.4
 -%66 global coverture
 
 _______________________________________________________________________________________________________________________________________________________________________
+
 VERSION 3.5
 -MULTIPLIER FIXED IT CALCULATE HOW IT IS SUPOSED TO YEAAAAAY
 
@@ -144,3 +145,10 @@ VERSION 3.6
 -Player file test coverture rised to %73
 -Global coverture of %71
 -Main functions of player were fixed, I need to test two more function and player will be in %100 coverture
+
+_______________________________________________________________________________________________________________________________________________________________________
+
+VERSION 3.7
+-Player file test coverture rised to %94
+-Global coverture rised to %75
+-one rise value on player is giving me a erro that i cannot understand why, but the next update shoud be a %100 over player 

@@ -23,35 +23,21 @@ class Player:
 
     def take_tiles(self, tiles):
         self.player_rack.extend(tiles)
-
-    def exchange_tiles(self, bag, letters):
-        replaced_tiles = []
-        for letter in letters:
-            for tile in self.player_rack:
-                if tile == letter:
-                    self.player_rack.remove(tile)
-                    replaced_tiles.append(tile)
-                    break
-
-        new_tiles = bag.take(len(replaced_tiles))
-        self.player_rack.extend(new_tiles)
-        bag.put(replaced_tiles)
     
     def give_tiles(self, letters):
         rack_backup = self.player_rack.copy()
         tiles = []
         for i in range(len(letters)):
-            letter_index = -1
             for j in range(7 - i):
                 if j >= len(rack_backup):
                     break
-                if rack_backup[j].letter == letters[i][0]:
-                    letter_index = j
+                if rack_backup[j].letter == letters[i]:
+                    tiles.append(rack_backup.pop(j))
                     break
-            if letter_index == -1:
+            else:
                 self.player_rack = rack_backup
                 raise ValueError("Letter not in player's rack")
-            tiles.append(rack_backup.pop(letter_index))
+        self.player_rack = rack_backup
         return tiles
             
     def exchange_tiles(self, bag, letters):
