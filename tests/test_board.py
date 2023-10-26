@@ -103,47 +103,47 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(value, 7)
 
     def test_with_word_multiplier(self):
-        cell1 = Cell(multiplier=1,multiplier_type=False)
+        cell1 = Cell(multiplier=1,multiplier_type='letter')
         cell1.add_letter(Tile('C', 1)) 
-        cell2 = Cell(multiplier=1,multiplier_type=False)
+        cell2 = Cell(multiplier=1,multiplier_type='letter')
         cell2.add_letter(Tile('A', 1))
-        cell3 = Cell(multiplier=2,multiplier_type=False)
+        cell3 = Cell(multiplier=2,multiplier_type='word')
         cell3.add_letter(Tile('S', 2))
-        cell4 = Cell(multiplier=1,multiplier_type=False)
+        cell4 = Cell(multiplier=1,multiplier_type='letter')
         cell4.add_letter(Tile('A', 1))
 
         word = [cell1, cell2, cell3, cell4]
         value = Board().calculate_word_value(word)
-        self.assertEqual(value, 5)
+        self.assertEqual(value, 10)
 
     def test_with_letter_word_multiplier(self):
-        cell1 = Cell(multiplier=3,multiplier_type=True)
+        cell1 = Cell(multiplier=3,multiplier_type='word')
         cell1.add_letter(Tile('C', 1)) 
-        cell2 = Cell(multiplier=1,multiplier_type=False)
+        cell2 = Cell(multiplier=1,multiplier_type='letter')
         cell2.add_letter(Tile('A', 1))
-        cell3 = Cell(multiplier=2,multiplier_type=False)
+        cell3 = Cell(multiplier=2,multiplier_type='letter')
         cell3.add_letter(Tile('S', 2))
-        cell4 = Cell(multiplier=1,multiplier_type=False)
+        cell4 = Cell(multiplier=1,multiplier_type='letter')
         cell4.add_letter(Tile('A', 1))
 
         word = [cell1, cell2, cell3, cell4]
         value = Board().calculate_word_value(word)
-        self.assertEqual(value, 5)
+        self.assertEqual(value, 21)
 
     def test_with_letter_word_multiplier_no_active(self):
-        cell1 = Cell(multiplier=3,multiplier_type=True,active=False)
+        cell1 = Cell(multiplier=3,multiplier_type='letter',multiplier_used=False)
         cell1.add_letter(Tile('C', 1)) 
-        cell2 = Cell(multiplier=1,multiplier_type=False,active=False)
+        cell2 = Cell(multiplier=1,multiplier_type='letter',multiplier_used=False)
         cell2.add_letter(Tile('A', 1))
-        cell3 = Cell(multiplier=2,multiplier_type=True,active=False)
+        cell3 = Cell(multiplier=2,multiplier_type='word',multiplier_used=False)
         cell3.add_letter(Tile('S', 2))
-        cell4 = Cell(multiplier=1,multiplier_type=False,active=False)
+        cell4 = Cell(multiplier=1,multiplier_type='letter',multiplier_used=False)
         cell4.add_letter(Tile('A', 1))
-    """
+    
         word = [cell1, cell2, cell3, cell4]
         value = Board().calculate_word_value(word)
-        self.assertEqual(value, )
-    """
+        self.assertEqual(value, 14)
+    
     """
     def test_horizontal_word(self):
         word = ['H', 'E', 'L', 'L', 'O']

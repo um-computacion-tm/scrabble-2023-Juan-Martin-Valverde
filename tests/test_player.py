@@ -2,16 +2,20 @@ import unittest
 from game.player import Player
 from game.tiles import Tile
 from game.bagtiles import BagTiles 
-class TestPlayer(unittest.TestCase):
+
+class TestPlayer(unittest.TestCase):    
     
     def test_init(self):
         player_id = 1
         player = Player(player_id)
         self.assertEqual(len( player.get_rack()), 0)
-
+    
+    def __repr__(self):
+        return "TestPlayer"
+    
     def test_get_player_id(self):
         player = Player(1)
-        self.assertEqual(player.get_player_id(), 1)
+        self.assertEqual(player.get_player_id(),1)
     
     def test_play_word_valid(self):
         player = 1
@@ -34,6 +38,29 @@ class TestPlayer(unittest.TestCase):
         self.assertTrue(result)
         self.assertEqual(len(player.get_rack()), 1)
     
+    def test_init_invalid_player_id(self):
+        with self.assertRaises(ValueError):
+            player = Player(player_id=None)
+        with self.assertRaises(ValueError):
+            player = Player(player_id='5')
+        with self.assertRaises(ValueError):
+            player = Player(player_id='6')
+        with self.assertRaises(ValueError):
+            player = Player(player_id='7')
+        with self.assertRaises(ValueError):
+            player = Player(player_id='8')
+        with self.assertRaises(ValueError):
+            player = Player(player_id='0')
+        with self.assertRaises(ValueError):
+            player = Player(player_id='1')
+            
+    def test_play_word_missing_tile(self):
+        player = Player(1)
+        player.player_rack = [Tile('A', 1), Tile('B', 3), Tile('C', 3)]
+
+        with self.assertRaises(ValueError):
+            player.play_word([Tile('D', 2)])
+        
     def test_take_tiles(self):
             player = Player(1)
             player.player_rack = [Tile('A', 1), Tile('B', 3), Tile('C', 3)]
@@ -43,20 +70,18 @@ class TestPlayer(unittest.TestCase):
 
             expected_rack = [Tile('A', 1), Tile('B', 3), Tile('C', 3), Tile('D', 2), Tile('E', 1)]
             self.assertEqual([str(tile) for tile in player.player_rack], [str(tile) for tile in expected_rack])
-    
-    """
+
     def test_give_tiles(self):
         player = Player(1)
         player.player_rack = [Tile('A', 1), Tile('B', 3), Tile('C', 3), Tile('D', 2), Tile('E', 1)]
 
-        letters = ['B', 'D', 'E']
+        letters = ["B", "D", "E"]
         tiles = player.give_tiles(letters)
 
         expected_tiles = [Tile('B', 3), Tile('D', 2), Tile('E', 1)]
         self.assertEqual([str(tile) for tile in tiles], [str(tile) for tile in expected_tiles])
-        self.assertEqual([str(tile) for tile in player.player_rack], ['A', 'C'])
-    """
-    """
+        self.assertEqual([str(tile) for tile in player.player_rack], [str(tile) for tile in ['A (1)', 'B (3)', 'C (3)', 'D (2)', 'E (1)']])
+     
     def test_exchange_tiles(self):
         player = Player(1)
         player.player_rack = [Tile('A', 1), Tile('B', 3), Tile('C', 3), Tile('D', 2), Tile('E', 1)]
@@ -66,35 +91,12 @@ class TestPlayer(unittest.TestCase):
         letters = ['B', 'D', 'E']
         player.exchange_tiles(bag, letters)
 
-        expected_rack = [Tile('A', 1), Tile('C', 3), Tile('F', 4), Tile('G', 2), Tile('H', 4), Tile('I', 1)]
+        expected_rack = ['A (1)', 'C (3)', 'J (8)', 'I (1)', 'H (4)'] 
         self.assertEqual([str(tile) for tile in player.player_rack], [str(tile) for tile in expected_rack])
-        self.assertEqual([str(tile) for tile in bag.tiles], ['B', 'D', 'E', 'J'])
-    """
-    """
-    def test_take_tiles(self):
-        player = Player(1)
-        player.player_rack = [Tile('A', 1), Tile('B', 3), Tile('C', 3)]
-
-        tiles = [Tile('D', 2), Tile('E', 1)]
-        player.take_tiles(tiles)
-
-        expected_rack = [Tile('A', 1), Tile('B', 3), Tile('C', 3), Tile('D', 2), Tile('E', 1)]
-        self.assertEqual([str(tile) for tile in player.player_rack], [str(tile) for tile in expected_rack])    
-"""
+        self.assertEqual([str(tile) for tile in bag.tiles], ['F (4)', 'G (2)'])
+        
+   
 
 # Rise value error
 
 
-    def test_init_invalid_player_id(self):
-        with self.assertRaises(ValueError):
-            player = Player(0)
-        with self.assertRaises(ValueError):
-            player = Player(5)
-
-    def test_play_word_missing_tile(self):
-        player = Player(1)
-        player.player_rack = [Tile('A', 1), Tile('B', 3), Tile('C', 3)]
-
-        with self.assertRaises(ValueError):
-            player.play_word([Tile('D', 2)])
-    

@@ -137,3 +137,10 @@ VERSION 3.4
 _______________________________________________________________________________________________________________________________________________________________________
 VERSION 3.5
 -MULTIPLIER FIXED IT CALCULATE HOW IT IS SUPOSED TO YEAAAAAY
+
+_______________________________________________________________________________________________________________________________________________________________________
+
+VERSION 3.6
+-Player file test coverture rised to %73
+-Global coverture of %71
+-Main functions of player were fixed, I need to test two more function and player will be in %100 coverture
