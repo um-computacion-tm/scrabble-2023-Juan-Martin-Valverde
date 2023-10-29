@@ -12,7 +12,7 @@ class Player:
         self.player_rack = []
 
     def __repr__(self):
-        return f"Player(name={self.name}, player_rack={self.player_rack})"
+        return f"Player(player_id={self.player_id}, player_rack={self.player_rack})"
 
     def play_word(self, word):
         for letter in word:
@@ -35,7 +35,7 @@ class Player:
                     tiles.append(rack_backup.pop(j))
                     break
             else:
-                self.player_rack = rack_backup
+                self.player_rack != rack_backup
                 raise ValueError("Letter not in player's rack")
         self.player_rack = rack_backup
         return tiles

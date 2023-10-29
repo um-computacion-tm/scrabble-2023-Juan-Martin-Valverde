@@ -152,3 +152,10 @@ VERSION 3.7
 -Player file test coverture rised to %94
 -Global coverture rised to %75
 -one rise value on player is giving me a erro that i cannot understand why, but the next update shoud be a %100 over player 
+
+_______________________________________________________________________________________________________________________________________________________________________
+
+VERSION 3.8
+-ScrabbleGame file test coverture raise to %100
+-Player file test coverture raised to %96
+-Global coverture of %87
