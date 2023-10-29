@@ -74,11 +74,88 @@ VERSION 2.4
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 VERSION 2.5
--After i talk with Walter he told me that my tests doesnt run beacause their name was wrong, and that my coverage doesnt has a path so this commit fix that 
+-After i talk with Walter he told me that my tests doesnt run beacause of their name was, and that my coverage doesnt has a path so this commit fix that 
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 VERSION 2.6
--This work is now reaching its final stage, now im working whit the errors i get from the unnittest that i made so the next updates will be about that
+-This work is now reaching its final stage, now im working whit the errors i get from the unnittest that i made so the next updates will be about that 17/26
 -I was readding the list that i have and y realice that i have to work whit the REA API for the dictionari and the cossline word(these ones scares me a lot i cant realice how to get it done) thoes will be the finals implementations and the las things that i would test in this proyect
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+VERSION 2.7 
+-More errors fixed and tests added 19/30
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+VERSION 2.8
+-Player upgraded 
+-Some clases from other were not being called, I read the file and was beacuse i doesn't defined were was called
+
+_______________________________________________________________________________________________________________________________________________________________________
+
+VERSION 2.9
+- More test fixed
+- Docker file added
+
+
+_______________________________________________________________________________________________________________________________________________________________________
+
+
+VERSION 3.0
+
+-%100 COVERTURE IN TILES AND BAG TILE YEEAAAAAAH BOOOOOOOOOOIIIIIII
+-AND ALL TEST RUN CORRECT YEAAAAAA BOIIIIIIIIIII
+
+_______________________________________________________________________________________________________________________________________________________________________
+
+VERSION 3.1
+-%81 and %69 of coverture over cell and board file
+-Both of this files run and pass a good part of their test, i get 2 failures and 3 error of 27 tests
+-I dont know why the multiplier is bad aplied im struggling so bad whit that
+-I think that i will let it to consult class and continue working in the other files but i dont know if my actual problem whit multiplier will bother me whit the oter files
+
+_______________________________________________________________________________________________________________________________________________________________________
+
+VERSION 3.2
+-%52 of coverture over player 
+-Some test are giving me a rare error that i dont undestand so gotta check whit teachers
+
+_______________________________________________________________________________________________________________________________________________________________________
+
+VERSION 3.3
+-%41 of coverture over scarbblegame
+-Like whit player there are some test error that i dont get how to fix them
+
+_______________________________________________________________________________________________________________________________________________________________________
+
+VERSION 3.4
+-%77 coverture over mainmenu
+-And just like another day in the office i get an error over a test that i dont know how to fix so have to ask to teacher in this week
+-%66 global coverture
+
+_______________________________________________________________________________________________________________________________________________________________________
+
+VERSION 3.5
+-MULTIPLIER FIXED IT CALCULATE HOW IT IS SUPOSED TO YEAAAAAY
+
+_______________________________________________________________________________________________________________________________________________________________________
+
+VERSION 3.6
+-Player file test coverture rised to %73
+-Global coverture of %71
+-Main functions of player were fixed, I need to test two more function and player will be in %100 coverture
+
+_______________________________________________________________________________________________________________________________________________________________________
+
+VERSION 3.7
+-Player file test coverture rised to %94
+-Global coverture rised to %75
+-one rise value on player is giving me a erro that i cannot understand why, but the next update shoud be a %100 over player 
+
+_______________________________________________________________________________________________________________________________________________________________________
+
+VERSION 3.8
+-ScrabbleGame file test coverture raise to %100
+-Player file test coverture raised to %96
+-Global coverture of %87

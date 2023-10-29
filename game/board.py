@@ -1,62 +1,86 @@
-
-
+from typing import List, Tuple
 from game.cells import Cell
-from game.bagtiles import BagTiles
 from game.tiles import Tile
-from game.dictionary import Dictionary
-
+Empty_cell = Cell()
 
 class Board:
+
     def __init__(self):
-        self.grid = [
-            [ Cell(1, '') for _ in range(15) ]
-            for _ in range(15)
-        
-        ]
-        self.grid[0][0] = Cell(1, '*')
+        self.grid = [[Cell() for _ in range(15)] for _ in range(15)]      
+        self.grid[0][0] = Cell(3, 'word')
         self.grid[0][7] = Cell(3, 'word')
-        self.grid[0][14] = Cell(1, '*')
+        self.grid[0][14] = Cell(3, 'word')
+        self.grid[7][0] = Cell(3, 'word')
+        self.grid[7][14] = Cell(3, 'word')
+        self.grid[14][0] = Cell(3, 'word')
+        self.grid[14][7] = Cell(3, 'word')
+        self.grid[14][14] = Cell(3, 'word')
+        self.grid[1][1] = Cell(2, 'letter')
+        self.grid[2][2] = Cell(2, 'letter')
+        self.grid[3][3] = Cell(2, 'letter')
+        self.grid[4][4] = Cell(2, 'letter')
+        self.grid[10][10] = Cell(2, 'letter')
+        self.grid[11][11] = Cell(2, 'letter')
+        self.grid[12][12] = Cell(2, 'letter')
+        self.grid[13][13] = Cell(2, 'letter')
+        self.grid[1][13] = Cell(2, 'letter')
+        self.grid[2][12] = Cell(2, 'letter')
+        self.grid[3][11] = Cell(2, 'letter')
+        self.grid[4][10] = Cell(2, 'letter')
+        self.grid[10][4] = Cell(2, 'letter')
+        self.grid[11][3] = Cell(2, 'letter')
+        self.grid[12][2] = Cell(2, 'letter')
+        self.grid[13][1] = Cell(2, 'letter')
+        self.grid[7][3] = Cell(2, 'letter')
+        self.grid[5][1] = Cell(3, 'letter')
+        self.grid[1][5] = Cell(3, 'letter')
+        self.grid[0][3] = Cell(2, 'letter')
+        self.grid[3][0] = Cell(2, 'letter')
+        self.grid[6][2] = Cell(2, 'letter')
+        self.grid[2][6] = Cell(2, 'letter')
 
-    
-    def check_word(self, word, file_path):
-        with open(file_path, "r") as file:
-            words = file.read().splitlines()
-            if word in words:
-                return True
-            else:
-                return False
-            
-    def calculate_word_value(self, word, start_row,start_col, direction, letter:Tile):
-        score = 0
+    def put_word(self, word, position, orientation):
+        N = position[0] - 1
+        M = position[1] - 1
+        for i in word: 
+            self.grid[N][M].letter= i
+            if orientation == 'H':
+                M += 1
+            elif orientation == 'V': 
+                N += 1
+
+    def calculate_word_value(self, word: List[Cell]) -> int:
+        value = 0
         word_multiplier = 1
-
-        for i, letter in enumerate(word):
-            row = start_row + (i * direction[0])
-            col = start_col + (i * direction[1])
-            cell = self.grid[row][col]
-
-            letter_value = letter.value
-            cell_multiplier = 1
-
-            if cell.special == 'DL':                    #DOBLE (LETRA)
-                letter_value *= 2
-            elif cell.special == 'TL':                  #TRIPLE (LETRA)
-                letter_value *= 3
-            elif cell.special == 'DW':                  #DOBLE (PALABRA)
-                word_multiplier *= 2
-            elif cell.special == 'TW':                  #TRIPLE (PALABRA)
-                word_multiplier *= 3
-            elif cell.special == '*':                   #COMODIN
-                
-                pass
-
-            score += letter_value * cell_multiplier
-
-        return score * word_multiplier
-
-class MissingTileInRackException(Exception):
-    pass
-
+        for cell in word:
+            if cell.letter is None:
+                return 0
+            cell_value = cell.calculate_value()
+            if cell.multiplier_type == 'letter':
+                cell_value *= cell.multiplier
+            elif cell.multiplier_type == 'word':
+                word_multiplier *= cell.multiplier
+            value += cell_value
+        return value * word_multiplier
     
-if __name__ == '__main__':
-    pass
+    def is_valid(self, word: List[Cell]) -> bool:
+        for cell in word:
+            if cell.letter is None:
+                return False
+        return True
+    
+    def is_valid_position(self, word: List[Cell], position: List[int], orientation: str) -> bool:
+        row, col = position
+        if orientation == 'H':
+            if col + len(word) > 15:
+                return False
+        else: 
+            if row + len(word) > 15:
+                return False
+        return True
+
+   
+
+   
+   
+    

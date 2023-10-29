@@ -14,8 +14,6 @@ exclude_lines =
     def test_
     return raw_input
     print
-    
-
-if name == '__main__'
+    if name == '__main__'
     def site 
-    _str_
+    __str__

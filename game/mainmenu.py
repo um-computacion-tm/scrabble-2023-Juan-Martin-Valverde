@@ -11,8 +11,10 @@ def get_inputs():
             players = int(input("How many player will be? (2-4): "))
             if 1 <= players <= 4:
                 return players
+            else:
+                print("Please enter a valid number between 2 and 4.")
         except ValueError:
-            print("please, define a valid value.")
+            print("Please enter a valid number between 2 and 4.")
 
 def validate_number_of_players():
     while True:
@@ -23,11 +25,10 @@ def validate_number_of_players():
             print("please, define a valid value (2-4).")
 
 def main():
-    print("WELLCOME TO SCRABBLE, by Juan Martin Valverde")
+    print("¡Bienvenido a Scrabble!")
+    num_players = validate_number_of_players()
 
     players = validate_number_of_players()
     scrabble_game = ScrabbleGame(players)
     scrabble_game.begin_Match
 
-if __name__ == '__main__':
-    main()
