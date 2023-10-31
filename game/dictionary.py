@@ -1,6 +1,13 @@
-class Dictionary:
-    def __init__(self, file_path='diccionario.txt'):
-        self.file_path = file_path
-        
+from pyrae import dle 
+
+class DictionaryConnectionError(Exception):
+    ...
+dle.set_log_level(log_level='CRITICAL') 
+
+def is_in_dictionary(word):
+    search = dle.search_by_word(word=word)
+    if search is None:
+        raise DictionaryConnectionError()
+    return search.meta_description != 'Versión electrónica 23.6 del «Diccionario de la lengua española», obra lexicográfica académica por excelencia.'
 
         

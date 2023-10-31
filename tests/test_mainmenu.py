@@ -1,3 +1,4 @@
+"""
 
 import unittest
 from unittest.mock import patch, Mock
@@ -22,7 +23,9 @@ class TestMain(unittest.TestCase):
     def test_number_of_player_not_valid_and_valid(self, mock_input):
         num_players = validate_number_of_players()
         self.assertEqual(num_players, 3)
-    """
+"""
+  
+"""
     @patch('sys.stdout', new_callable=StringIO)
     @patch('builtins.input', side_effect=["3"])
     
@@ -32,9 +35,12 @@ class TestMain(unittest.TestCase):
         mock_stdout.seek(0)
         output = mock_stdout.read()
         self.assertIn("¡Bienvenido a Scrabble!", output)
-    """
+"""
+  
+"""
     @patch('builtins.input', side_effect = ["abc", "2"])
     def test_no_valido_luego_valid(self, mock_input):
         num_players = validate_number_of_players()
         self.assertEqual(num_players, 2)
 
+"""

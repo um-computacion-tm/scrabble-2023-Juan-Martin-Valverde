@@ -159,3 +159,31 @@ VERSION 3.8
 -ScrabbleGame file test coverture raise to %100
 -Player file test coverture raised to %96
 -Global coverture of %87
+_______________________________________________________________________________________________________________________________________________________________________
+
+VERSION 3.9
+- Api for dictionary added and tested it works
+-dictionary file test coverture of %100
+-Global coberture of %90
+
+_______________________________________________________________________________________________________________________________________________________________________
+
+VERSION 4.1
+
+-After working whit the api i realice that it was (sorry for my expresion) a kick in the balls, because i was getting a lot of problems whit the conectivity. I've talked whit GPT about that en it recomend me to use a .txt file that will have all the words and in my dictionary file make a call over that .txt
+-Board and a lot of new functions added
+-I was bored because of the zonda so i make a lot of new things, juts have to test then and see if the work 
+
+- TEST COVERTURE:
+Tile = %100
+ScrabbleGame = %39
+Player = %100
+MainMenu = %0 
+Dictionary = %100 #ABOUT TO BE MODIFIED
+Cells = %100
+Board = %82
+BagTiles = %100
+GOBAL = %63
+
+-Refactoring problems soved 
+-Im whitout wifi on my house so i will be working on the university
