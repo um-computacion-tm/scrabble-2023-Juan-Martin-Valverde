@@ -1,5 +1,5 @@
-from game.mainmenu import MainMenu
+from game.mainmenu import Main_Menu
 
 def main():
-    client = MainMenu(player_count=0)
+    client = Main_Menu(player_count=0)
     client.client() 
