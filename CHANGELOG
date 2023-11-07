@@ -159,3 +159,47 @@ VERSION 3.8
 -ScrabbleGame file test coverture raise to %100
 -Player file test coverture raised to %96
 -Global coverture of %87
+_______________________________________________________________________________________________________________________________________________________________________
+
+VERSION 3.9
+- Api for dictionary added and tested it works
+-dictionary file test coverture of %100
+-Global coberture of %90
+
+_______________________________________________________________________________________________________________________________________________________________________
+
+VERSION 4.1
+
+-After working whit the api i realice that it was (sorry for my expresion) a kick in the balls, because i was getting a lot of problems whit the conectivity. I've talked whit GPT about that en it recomend me to use a .txt file that will have all the words and in my dictionary file make a call over that .txt
+-Board and a lot of new functions added
+-I was bored because of the zonda so i make a lot of new things, juts have to test then and see if the work 
+
+
+
+-Refactoring problems soved 
+-Im whitout wifi on my house so i will be working on the university
+
+_______________________________________________________________________________________________________________________________________________________________________
+
+VERSION 4.2
+
+- On the final heat into this project
+- tried to make the dictionary whit a .txt file but i didn't knew how to work whit it so i turned around en continue working whit PYRAE
+- My verification of left rigth up and down are bad scripted so gotta change them and their test were also bad scripted
+- BOARD, MAIN MENU and SCRABBLEGAME files have a lot of things to test gotta see if i can make all in these last days
+- Im really tired whit this proyect :(
+- I wanted to add colorama but i dont know if i will have enough time to code it and test it so colorama its a maybe
+_______________________
+- TEST COVERTURE:     | 
+______________________|
+BagTiles = %100       |
+Board = %93           |
+Cells = %100          |
+Dictionary = %100     |
+MainMenu = %73        |
+Player = %100         |
+ScrabbleGame = %39    |
+Tile = %100           |
+______________________|
+GOBAL = %82           |
+______________________|

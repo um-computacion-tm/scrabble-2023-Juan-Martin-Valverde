@@ -1,29 +1,31 @@
+from typing import Any
 from game.tiles import Tile
 
 class Cell:
-    def __init__(self, multiplier='', multiplier_type='', active=True, multiplier_used=False):
+    def __init__(self, multiplier = 1, multiplier_type = 'letter', tile=None, active=True,):
         self.multiplier = multiplier
         self.multiplier_type = multiplier_type
-        self.letter = None
         self.active = active
-        self.multiplier_used = multiplier_used
-        
-    def add_letter(self, letter, new_multiplier_used=False):
-        self.letter = letter
-        self.active = False
-        self.calculate_value(new_multiplier_used)
-        
-    def calculate_value(self, new_multiplier_used=False):
-        if self.letter is None:
+        self.tile = tile
+
+    def add_tile(self, tile: Tile):
+        self.tile = tile
+
+    def calculate_letter_score(self):
+        if self.tile is None:
             return 0
-        value = self.letter.value
-        if self.active:
-            if self.multiplier_type == 'letter':
-                if not self.multiplier_used and not new_multiplier_used:
-                    value *= self.multiplier
-                    self.multiplier_used = True
-            elif self.multiplier_type == 'word':
-                if not self.multiplier_used and not new_multiplier_used:
-                    value *= self.multiplier
-                    self.multiplier_used = True
-        return value
+        if self.multiplier_type == 'letter':
+            result = self.tile.value * self.multiplier
+            self.multiplier_type = None
+            self.active = False
+            return result
+        else:
+            return self.tile.value
+
+    def __repr__(self): 
+        if self.tile:
+            return repr(self.tile)
+        if self.multiplier > 1:
+            return f'{"W" if self.multiplier_type == "word" else "L"}x{self.multiplier}'
+        else:
+            return '   '
