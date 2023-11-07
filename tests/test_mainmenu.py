@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch, MagicMock, Mock
-from game.main import Main_Menu
+from game.mainmenu import Main_Menu
 from game.scrabblegame import ScrabbleGame
 
 class TestMainMenu(unittest.TestCase):
