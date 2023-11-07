@@ -83,7 +83,7 @@ class Main_Menu():
         else:
             print("Valor invalido por favor ingresar uno correcto.")
 
-    def client(self):
+    def Begin_game(self):
         self.welcome_message()
         player_count = self.get_player_count()
         self.scrabble = ScrabbleGame(total_players=player_count)
