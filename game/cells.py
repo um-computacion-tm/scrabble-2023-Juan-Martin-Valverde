@@ -8,7 +8,6 @@ class Cell:
         self.active = active
         self.tile = tile
 
-
     def add_tile(self, tile: Tile):
         self.tile = tile
 

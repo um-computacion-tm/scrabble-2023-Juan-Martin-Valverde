@@ -1,45 +1,38 @@
 from game.cells import Cell
 from game.tiles import Tile
-from game.dictionary import (is_in_dictionary, DictionaryConnectionError)
-from colorama import Fore, Back, Style, init
+from game.dictionary import valid_word
+
 
 class InvalidLocation(Exception):
     pass
 class InvalidWord(Exception):
     pass
-
+#word x3 multiplier position
 Wx3 = ((0,0), (7, 0), (14,0), (0, 7), (14, 7), (0, 14), (7, 14), (14,14))
-Wx2 = ((1,1), (2,2), (3,3), (4,4), (1, 13), (2, 12), (3, 11), (4, 10), (13, 1), (12, 2), (11, 3), (10, 4), (13,13), (12, 12), (11,11), (10,10))
+#word x2 multiplier position
+Wx2= ((1,1), (2,2), (3,3), (4,4), (1, 13), (2, 12), (3, 11), (4, 10), (13, 1), (12, 2), (11, 3), (10, 4), (13,13), (12, 12), (11,11), (10,10))
+#letter x3 multiplier position
 Lx3 = ((1,5), (1, 9), (5,1), (5,5), (5,9), (5,13), (9,1), (9,5), (9,9), (9,13), (13, 5), (13,9))
+#letter x2 multiplier position
 Lx2 = ((0, 3), (0,11), (2,6), (2,8), (3,0), (3,7), (3,14), (6,2), (6,6), (6,8), (6,12), (7,3), (7,11), (8,2), (8,6), (8,8), (8, 12), (11,0), (11,7), (11,14), (12,6), (12,8), (14, 3), (14, 11))
 
 class Board:
     def __init__(self): 
         self.grid = [[Cell(1, '') for _ in range(15)] for _ in range(15)]
         self.get_multipliers()
-
+        self.dictionary = valid_word()
+    
     def valid_word_in_place(self, word, location, orientation):
-        try:
-            if not self.valid_word_in_board(word, location, orientation):
+        if not self.no_tiles_placed(word, location, orientation):
+            if self.has_crossword(word, location, orientation):
                 return False
-
+        else:
             if self.has_neighbor_tile(word, location, orientation):
-                if not self.has_crossword(word, location, orientation):
-                    return False
-                
-                if self.find_and_validate_words_up(word, location) or \
-                self.find_and_validate_words_down(word, location) or \
-                self.find_and_validate_words_left(word, location) or \
-                self.find_and_validate_words_right(word, location) or \
-                self.find_and_validate_words_adjacent_horizontal (word, location):
-                    return True
+                if orientation == 'H' or orientation == 'h':
+                    return self.find_and_validate_words_adjacent_horizontal(word, location) or self.find_and_validate_words_right_left(word, location)
                 else:
-                    return False
-            else:
-                return True
-        except AttributeError:
-            print("Invalid input. Please check your word, location, and orientation.")
-            return False        
+                    return self.find_and_validate_words_adjacent_vertical(word, location) or self.find_and_validate_words_up_down(word, location)
+            return False
         
     def valid_word_in_board(self, word, location, orientation):
         x, y = location
@@ -79,122 +72,82 @@ class Board:
                     return True
         return False
     
-    def find_and_validate_words_up(self, word, location):
-        x, y = location
+
+    def find_and_validate_words_up_and_down(self, word, location): 
+        row, col = location
         formed_word = []
-        if self.grid[x][y].tile:
-            formed_word.append(self.grid[x][y].tile.letter)
-
-        # Iterar hacia arriba
-        current_x, current_y = x, y - 1 
-        while self.is_valid_position((current_x, current_y)) and self.grid[current_x][current_y].tile:
-            formed_word.insert(0, self.grid[current_x][current_y].tile.letter)
-            current_y -= 1
-
-        formed_word_str = ''.join(formed_word)
-        if is_in_dictionary(formed_word_str):
-            final_word = formed_word_str + word
-            print(f"Formed and validated word: {final_word}")
-            return final_word
-        else:
-            print(f"Invalid word formed: {formed_word_str}")
-            return None
-
-    def find_and_validate_words_down(self, word, location):
-        x, y = location
-        formed_word = []
-        if self.grid[x][y].tile:
-            formed_word.append(self.grid[x][y].tile.letter)
-
-        # Iterar hacia abajo
-        current_x, current_y = x, y + 1
-        while self.is_valid_position((current_x, current_y)) and self.grid[current_x][current_y].tile:
-            formed_word.append(self.grid[current_x][current_y].tile.letter)
-            current_y += 1
-
-        formed_word_str = ''.join(formed_word)
-        if is_in_dictionary(formed_word_str):
-            final_word = word + formed_word_str
-            print(f"Formed and validated word: {final_word}")
-            return final_word
-        else:
-            print(f"Invalid word formed: {formed_word_str}")
-            return None
-
-    def find_and_validate_words_right(self, word, location):
-        x, y = location
-        formed_word = []
-
-        if self.grid[x][y].tile:
-            formed_word.append(self.grid[x][y].tile.letter)
-        # Iterar hacia la derecha
-        current_x, current_y = x + 1 , y  
-        while self.is_valid_position((current_x, current_y)) and self.grid[current_x][current_y].tile:
-            formed_word.append(self.grid[current_x][current_y].tile.letter)
-            current_x += 1
-
-        formed_word_str = ''.join(formed_word)
-        if is_in_dictionary(formed_word_str):
-            final_word = word + formed_word_str
-            print(f"Formed and validated word: {final_word}")
-            return final_word
-        else:
-            print(f"Invalid word formed: {formed_word_str}")
-            return None
         
-    def find_and_validate_words_left(self, word, location):
-        x, y = location
-        formed_word = []
+        if self.grid[row][col].tile:
+            formed_word.append(self.grid[row][col].tile.letter)
+        
+        current_row, current_col = row - 1, col 
+        while self.is_valid_position((current_row, current_col)) and self.grid[current_row][current_col].tile:
+            formed_word.insert(0, self.grid[current_row][current_col].tile.letter)
+            current_row -= 1
 
-        if self.grid[x][y].tile:
-            formed_word.append(self.grid[x][y].tile.letter)
-        # Iterar hacia la izquierda
-        current_x, current_y = x - 1, y 
-        while self.is_valid_position((current_x, current_y)) and self.grid[current_x][current_y].tile:
-            formed_word.insert(0, self.grid[current_x][current_y].tile.letter)
-            current_x -= 1
+        current_row, current_col = row + len(word), col
+        while self.is_valid_position((current_row, current_col)) and self.grid[current_row][current_col].tile:
+            formed_word.append(self.grid[current_row][current_col].tile.letter)
+            current_row += 1
 
         formed_word_str = ''.join(formed_word)
-        if is_in_dictionary(formed_word_str):
-            final_word = formed_word_str + word
-            print(f"Formed and validated word: {final_word}")
-            return final_word
+        formed_word_str_down = word + formed_word_str
+        formed_word_str_up = formed_word_str + word
+        if self.dictionary.is_in_dictionary(formed_word_str_up) or self.dictionary.is_in_dictionary(formed_word_str_down):
+            return True, formed_word
         else:
-            print(f"Invalid word formed: {formed_word_str}")
-            return None
+            return False
 
+    def find_and_validate_words_right_left(self, word, location): 
+        row, col = location
+        formed_word = []
+        if self.grid[row][col].tile:
+            formed_word.append(self.grid[row][col].tile.letter)
+
+        current_row, current_col = row, col - 1
+        while self.is_valid_position((current_row, current_col)) and self.grid[current_row][current_col].tile:
+            formed_word.insert(0, self.grid[current_row][current_col].tile.letter)
+            current_col -= 1
+
+        current_row, current_col = row, col + len(word)
+        while self.is_valid_position((current_row, current_col)) and self.grid[current_row][current_col].tile:
+            formed_word.append(self.grid[current_row][current_col].tile.letter)
+            current_col += 1
+
+        formed_word_str = ''.join(formed_word)
+        formed_word_str_left = formed_word_str + word
+        formed_word_str_right = word + formed_word_str
+        if self.dictionary.is_in_dictionary(formed_word_str_left) or self.dictionary.is_in_dictionary(formed_word_str_right):
+            return True, formed_word
+        else:
+            return False
+
+         
     def find_and_validate_words_adjacent_horizontal(self, word, location):
-        x, y = location
+        row, col = location
         formed_words = []
 
-        for i,letter in enumerate(word):
+        for i, letter in enumerate(word):
             formed_word = [letter]
-            current_x, current_y = x, y
+            current_row, current_col = row, col
 
-            # Iterar hacia arriba
-            while self.is_valid_position((current_x, current_y - 1)) and self.grid[current_x][current_y - 1].tile:
-                current_y -= 1
-                formed_word.insert(0, self.grid[current_x][current_y].tile.letter)
+            while self.is_valid_position((current_row - 1, current_col)) and self.grid[current_row - 1][current_col].tile:
+                current_row -= 1
+                formed_word.insert(0, self.grid[current_row][current_col].tile.letter)
+                
+            current_row, current_col = row, col
 
-            current_x, current_y = x, y
+            while self.is_valid_position((current_row + 1, current_col)) and self.grid[current_row + 1][current_col].tile:
+                current_row += 1
+                formed_word.append(self.grid[current_row][current_col].tile.letter)
 
-            # Iterar hacia abajo
-            while self.is_valid_position((current_x, current_y + 1)) and self.grid[current_x][current_y + 1].tile:
-                current_y += 1
-                formed_word.append(self.grid[current_x][current_y].tile.letter)
-
-            # Invertir si la tile se encuentra arriba
-            if len(formed_word) > 1 and self.grid[current_x][current_y - 1].tile:
-                formed_word_str = ''.join(reversed(formed_word))
-            else:
-                formed_word_str = ''.join(formed_word)
-
-            if is_in_dictionary(formed_word_str):
+            formed_word_str = ''.join(formed_word)
+            if len(formed_word_str) > 1 and self.dictionary.is_in_dictionary(formed_word_str):
                 formed_words.append(formed_word_str)
-                print(f"Formed and validated word: {formed_word_str}")
+            elif len(formed_word_str) > 1 and not self.dictionary.is_in_dictionary(formed_word_str):
+                return False
 
-            # Mover a la siguiente letra
-            x += 1
+            col += 1
 
         return formed_words
 
@@ -257,7 +210,7 @@ class Board:
         x, y = 7,7
 
         if location != (x, y):
-            raise InvalidLocation('La primera palabra tiene que ser colocada en la posición (7,7)')
+            raise InvalidLocation('La primera palabra tiene que estar en la posicion(7,7)')
         
         self.put_word(word, (x, y), orientation)
         
@@ -277,7 +230,10 @@ class Board:
         square.multiplier = multiplier
         square.multiplier_type = multiplier_type
 
-    def __repr__(self): #Fixing
+
+#I liked how vicente cara tapia made it so I copied it
+
+    def __repr__(self): 
         spaces = " " * 4
         horizontal_line = spaces + "┌" + "─────┬" * 14 + "─────┐" + "\n"
         middle_horizontal_line = spaces + "├" + "─────┼" * 14 + "─────┤" + "\n"

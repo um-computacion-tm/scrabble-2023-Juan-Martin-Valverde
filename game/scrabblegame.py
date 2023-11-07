@@ -1,10 +1,7 @@
 from game.bagtiles import BagTiles
 from game.player import Player
 from game.board import Board
-from game.dictionary import(
-    DictionaryConnectionError,
-    is_in_dictionary
-)
+from game.dictionary import valid_word
 
 class InvalidWordException(Exception):
     pass
@@ -20,21 +17,10 @@ class ScrabbleGame():
         self.players:list[Player] = []
         for index in range(total_players):
             self.players.append(Player(id=index, bag_tiles=self.bag_tiles))
+        
         self.current_player = None
         self.round = 1
 
-    def get_player_count():
-        while True:
-            try:
-                player_count = int(input('cantidad de jugadores (1-3): '))
-                if player_count <= 3:
-                    break
-            except Exception as e:
-                print('ingrese un numero por favor')
-
-        return player_count   
-    
-    
     def is_playing(self):
         if len(self.bag_tiles.total_tiles) > 0:
             return True
@@ -64,12 +50,12 @@ class ScrabbleGame():
                 exchanged_tiles.append(player.playertiles[i - 1])
                 player.playertiles[i - 1] = new_tiles.pop(0)
 
-            # Devuelve las fichas originales al saco
+            
             self.bag_tiles.put(old_tiles)
 
             return exchanged_tiles
         else:
-            print("Invalid tile indices. Please enter numbers from 1 to 7.")
+            print("Indice de letra invalido. Por favor ingresa un numero entre 1 y 7 (1 para tu primer tile y 7 para tu ultima tile.")
             return []
     
     def exchange_all_tiles(self):
@@ -89,27 +75,19 @@ class ScrabbleGame():
     def start_game(self):
         return self.round_set()
 
-    def validate_word(self, word, location, orientation): #FIXING
+    def validate_word(self, word, location, orientation): 
         if not self.current_player.has_letter(word):
-            raise InvalidWordNoLetters("You don't have the tiles to form this word")   
-        '''  
-        if not is_in_dictionary(word):
-            raise InvalidWordException("Word, doesn't exist")
-            '''
+            raise InvalidWordNoLetters("no tienes las letras necesarias para formar esta palabra")   
         if not self.board.valid_word_in_board(word, location, orientation):
-            raise InvalidPlaceWordException("Your word exceeds the Board")
+            raise InvalidPlaceWordException("Tu palabra exede el tamaño del tablero")
         if not self.board.valid_word_in_place(word, location, orientation):
-            raise InvalidPlaceWordException("No valid position in board")
+            raise InvalidPlaceWordException("No es una posicion valida en el tablero")
     
     def validate_word_fist_round(self, word, location, orientation):
         if not self.current_player.has_letter(word):
-            raise InvalidWordNoLetters("You don't have the tiles to form this word")
-        '''
-        if not is_in_dictionary(word):
-            raise InvalidWordException("Word doesn't exist")
-            '''
+            raise InvalidWordNoLetters("no tienes las letras para formar esta palabra")
         if not self.board.valid_word_in_board(word, location, orientation):
-            raise InvalidPlaceWordException("Your word exceeds the Board")
+            raise InvalidPlaceWordException("Tu palabra exede el tamaño del tablero")
         self.board.put_first_word(word, location, orientation)
 
     
@@ -122,12 +100,9 @@ class ScrabbleGame():
         if not self.validate_word(word, location, orientation):
             self.current_player.play_word(word)
             self.board.put_word(word,location,orientation)
-        '''
-        total = self.board.calculate_word_score(words)
-        self.players[self.current_player.id].score += total
-        '''
+
         return self.current_player.score
 
     
     def get_current_player(self) -> Player:
-        return self.current_player
+        return self.players[self.current_player.id]

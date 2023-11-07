@@ -174,16 +174,32 @@ VERSION 4.1
 -Board and a lot of new functions added
 -I was bored because of the zonda so i make a lot of new things, juts have to test then and see if the work 
 
-- TEST COVERTURE:
-Tile = %100
-ScrabbleGame = %39
-Player = %100
-MainMenu = %0 
-Dictionary = %100 #ABOUT TO BE MODIFIED
-Cells = %100
-Board = %82
-BagTiles = %100
-GOBAL = %63
+
 
 -Refactoring problems soved 
 -Im whitout wifi on my house so i will be working on the university
+
+_______________________________________________________________________________________________________________________________________________________________________
+
+VERSION 4.2
+
+- On the final heat into this project
+- tried to make the dictionary whit a .txt file but i didn't knew how to work whit it so i turned around en continue working whit PYRAE
+- My verification of left rigth up and down are bad scripted so gotta change them and their test were also bad scripted
+- BOARD, MAIN MENU and SCRABBLEGAME files have a lot of things to test gotta see if i can make all in these last days
+- Im really tired whit this proyect :(
+- I wanted to add colorama but i dont know if i will have enough time to code it and test it so colorama its a maybe
+_______________________
+- TEST COVERTURE:     | 
+______________________|
+BagTiles = %100       |
+Board = %93           |
+Cells = %100          |
+Dictionary = %100     |
+MainMenu = %73        |
+Player = %100         |
+ScrabbleGame = %39    |
+Tile = %100           |
+______________________|
+GOBAL = %82           |
+______________________|

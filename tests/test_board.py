@@ -2,7 +2,8 @@ import unittest
 from game.board import Board, InvalidLocation
 from game.cells import Cell
 from game.tiles import Tile
-import difflib
+from unittest.mock import patch
+from game.dictionary import valid_word
 
 class TestBoard(unittest.TestCase):
     
@@ -10,10 +11,25 @@ class TestBoard(unittest.TestCase):
         board = Board ()
         self.assertEqual(len(board.grid),15)
         self.assertEqual(len(board.grid[0]),15)
+        self.dictionary= valid_word()
+        
+    def test_valid_word_in_place(self):
+      self.board = Board ()
+        # Test with a valid word, location and orientation
+      self.assertEqual(self.board.valid_word_in_place('test', (0, 0), 'H'), False)
+
+        # Test with a word that is too long for the board
+      self.assertEqual(self.board.valid_word_in_place('test'*10, (0, 0), 'H'), False)
+
+        # Test with an invalid location
+      self.assertEqual(self.board.valid_word_in_place('test', (100, 100), 'H'), False)
+
+        # Test with an invalid orientation
+      self.assertEqual(self.board.valid_word_in_place('test', (0, 0), 'X'), False)
 
     def test_word_inside_board(self):
         board = Board()
-        word = "Facultad"
+        word = "Segundo"
         location = (5, 4)
         orientation = "H"
         word_is_valid = board.valid_word_in_board(word, location, orientation)
@@ -22,7 +38,7 @@ class TestBoard(unittest.TestCase):
 
     def test_word_out_of_board(self):
         board = Board()
-        word = "Facultad"
+        word = "Segundo"
         location = (14, 4)
         orientation = "H"
         word_is_valid = board.valid_word_in_board(word, location, orientation)
@@ -30,7 +46,7 @@ class TestBoard(unittest.TestCase):
     
     def test_word_v_inside_board(self):
         board = Board()
-        word = "Facultad"
+        word = "Segundo"
         location = (5, 3)
         orientation = "V"
         word_is_valid = board.valid_word_in_board(word, location, orientation)
@@ -38,7 +54,7 @@ class TestBoard(unittest.TestCase):
     
     def test_word_v_out_of_board(self):
         board = Board()
-        word = "Facultad"
+        word = "Segundo"
         location = (5, 14)
         orientation = "V"
         word_is_valid = board.valid_word_in_board(word, location, orientation)
@@ -56,7 +72,7 @@ class TestBoard(unittest.TestCase):
     
     def test_put_word_horizontal(self):
         board = Board()
-        word = 'HOLA'
+        word = 'HENO'
         location = (7,7)
         orientation = 'H'
         board.put_word(word, location, orientation)
@@ -66,7 +82,7 @@ class TestBoard(unittest.TestCase):
 
     def test_put_word_Vertical(self):
         board = Board()
-        word = 'CANARIO'
+        word = 'BERRUGA'
         location = (3,2)
         orientation = 'V'
         board.put_word(word,location,orientation)
@@ -74,18 +90,18 @@ class TestBoard(unittest.TestCase):
         for i, letter in enumerate(word):
             self.assertEqual(board.grid[3+i][2].tile, letter)
 
-    def test_put_first_word_Horizontal_fine(self):
+    def test_put_first_word_Horizontal_work(self):
         board = Board()
-        word = 'PERRO'
+        word = 'SOPLAR'
         location = (7,7)
         orientation = 'H'
         board.put_first_word(word,location,orientation)
         for i, letter in enumerate(word):
             self.assertEqual(board.grid[7][7+i].tile, letter)
     
-    def test_put_first_word_vertical_fine(self):
+    def test_put_first_word_vertical_work(self):
         board = Board()
-        word = 'CARPA'
+        word = 'BOLSA'
         location = (7,7)
         orientation = 'V'
         board.put_first_word(word,location,orientation)
@@ -95,7 +111,7 @@ class TestBoard(unittest.TestCase):
         
     def test_put_first_word_horizontal_fail(self):
         board = Board()
-        word = 'CASACA'
+        word = 'SILBAR'
         location = (12,12)
         orientation = 'H'
         with self.assertRaises(InvalidLocation):
@@ -108,7 +124,7 @@ class TestBoard(unittest.TestCase):
         board.grid[13][3].add_tile(tile=Tile(letter='S', value=1))
         board.grid[14][3].add_tile(tile=Tile(letter='A', value=1))
 
-        word = 'CASA'
+        word = 'PERRO'
         location = (10, 2)
         orientation = 'V'
 
@@ -149,7 +165,7 @@ class TestBoard(unittest.TestCase):
         self.assertTrue(has_neighbor) 
 
     
-    def test_has_neihbor_tile_fail(self):
+    def test_has_neighbor_tile_fail(self):
         board = Board()
         board.grid[6][1].add_tile(tile=Tile(letter='G', value=1))
         board.grid[7][1].add_tile(tile=Tile(letter='O', value=1))
@@ -163,150 +179,6 @@ class TestBoard(unittest.TestCase):
         has_neighbor = board.has_neighbor_tile(word,location,orientation)
         self.assertFalse(has_neighbor)
     
-    def test_has_tile_down_form_word(self):
-        board = Board()
-        board.grid[5][2].add_tile(tile=Tile(letter='T', value=1))
-        board.grid[5][3].add_tile(tile=Tile(letter='R', value=1))
-        board.grid[5][4].add_tile(tile=Tile(letter='E', value=1))
-        board.grid[5][5].add_tile(tile=Tile(letter='N', value=1))
-
-        word = 'ES'
-        location = (5, 6)
-        orientation = 'V'
-
-        formed_word = board.find_and_validate_words_up(word, location)
-        self.assertTrue(formed_word, 'TRENES')
-    
-
-    
-    def test_has_tile_up_form_word(self):
-      board = Board()
-      board.grid[4][3].add_tile(tile=Tile(letter='O', value=1))
-      board.grid[4][4].add_tile(tile=Tile(letter='M', value=1))
-      board.grid[4][5].add_tile(tile=Tile(letter='A', value=1))
-
-      word = 'G'
-      location = (4, 2)
-      orientation = 'V'
-
-      formed_word = board.find_and_validate_words_down(word, location)
-      self.assertTrue(formed_word, 'GOMA')
-
-        
-    """
-    def test_has_tile_right_form_word(self):
-        board = Board()
-        board.grid[7][3].add_tile(tile=Tile(letter='J', value=1))
-        board.grid[8][3].add_tile(tile=Tile(letter='A', value=1))
-        board.grid[9][3].add_tile(tile=Tile(letter='R', value=1))
-        board.grid[10][3].add_tile(tile=Tile(letter='O', value=1))
-
-        word = 'PA'
-        location = (5,3)
-        orientation = 'H'
-
-        formed_word = board.find_and_validate_words_right(word, location)
-        self.assertTrue(formed_word, 'PAJARO')
-    
-    def test_has_tile_left_form_word(self):
-        board = Board()
-        board.grid[7][3].add_tile(tile=Tile(letter='C', value=1))
-        board.grid[8][3].add_tile(tile=Tile(letter='U', value=1))
-        board.grid[9][3].add_tile(tile=Tile(letter='D', value=1))
-        board.grid[10][3].add_tile(tile=Tile(letter='E', value=1))
-        board.grid[11][3].add_tile(tile=Tile(letter='R', value=1))   
-
-        word = 'NO'
-        location = (9, 4)
-        orientation = 'H'
-
-        formed_word = board.find_and_validate_words_left(word, location)   
-        self.assertTrue(formed_word, 'CUADERNO')  
-  """
-
-    
-    def test_has_adjacent_word(self):
-        board = Board()
-        board.grid[4][2].add_tile(tile=Tile(letter='E', value=1))
-        board.grid[5][2].add_tile(tile=Tile(letter='S', value=1))
-        board.grid[6][2].add_tile(tile=Tile(letter='T', value=1))
-        board.grid[7][2].add_tile(tile=Tile(letter='R', value=1))
-        board.grid[8][2].add_tile(tile=Tile(letter='E', value=1))
-        board.grid[9][2].add_tile(tile=Tile(letter='N', value=1))
-        board.grid[10][2].add_tile(tile=Tile(letter='O', value=1))     
-
-        word = 'MES'
-        location = (8,1)
-        orientation = 'H'
-
-        formed_words_list = ['ME', 'EN', 'SO']
-
-        formed_words = board.find_and_validate_words_adjacent_horizontal(word, location)
-        self.assertTrue(formed_words, formed_words_list)
-
-    def test_has_adjacent_word_dowm(self):
-        board = Board()
-        board.grid[4][2].add_tile(tile=Tile(letter='E', value=1))
-        board.grid[5][2].add_tile(tile=Tile(letter='S', value=1))
-        board.grid[6][2].add_tile(tile=Tile(letter='T', value=1))
-        board.grid[7][2].add_tile(tile=Tile(letter='R', value=1))
-        board.grid[8][2].add_tile(tile=Tile(letter='E', value=1))
-        board.grid[9][2].add_tile(tile=Tile(letter='N', value=1))
-        board.grid[10][2].add_tile(tile=Tile(letter='O', value=1))
-
-        word = 'MES'
-        location = (8, 3)
-        orientation = 'H'
-
-        formed_words_list = ['ME', 'EN', 'SO']
-
-        formed_word = board.find_and_validate_words_adjacent_horizontal(word, location)
-        self.assertTrue(formed_word, formed_words_list)
-
-      
-    '''
-    def test_has_adjacent_word_x2(self):
-        board = Board()
-        board.grid[4][2].add_tile(tile=Tile(letter='C', value=1))
-        board.grid[5][2].add_tile(tile=Tile(letter='A', value=1))
-        board.grid[6][2].add_tile(tile=Tile(letter='S', value=1))
-        board.grid[7][2].add_tile(tile=Tile(letter='A', value=1))
-
-        word = 'S'
-        location = (4,6)
-        orientation = 'V'
-
-        formed_word = board.find_and_validate_words(word, location, orientation)
-        self.assertTrue(formed_word)
-    
-    def has_adjacent_word_fail(self):
-        board = Board()
-        board.grid[4][2].add_tile(tile=Tile(letter='A', value=1))
-        board.grid[5][2].add_tile(tile=Tile(letter='P', value=1))
-        board.grid[6][2].add_tile(tile=Tile(letter='Q', value=1))
-        board.grid[7][2].add_tile(tile=Tile(letter='Z', value=1))
-
-        word = 'X'
-        location = (4,6)
-        orientation = 'H'
-
-        formed_word = board.find_and_validate_words(word, location, orientation)
-        self.assertFalse(formed_word)
-    
-    def has_adjacent_word_fail_x2(self):
-        board = Board()
-        board.grid[4][2].add_tile(tile=Tile(letter='X', value=1))
-        board.grid[5][2].add_tile(tile=Tile(letter='G', value=1))
-        board.grid[6][2].add_tile(tile=Tile(letter='D', value=1))
-        board.grid[7][2].add_tile(tile=Tile(letter='W', value=1))
-
-        word = 'XH'
-        location = (4, 6)
-        orientation = 'V'
-
-        formed_word = board.find_and_validate_words(word, location, orientation)
-        self.assertFalse(formed_word)
-    '''
     def test_has_crossword(self):
         board = Board()
         board.grid[6][3].add_tile(tile=Tile(letter='P', value=1))
@@ -407,13 +279,7 @@ class TestBoard(unittest.TestCase):
         orientation = 'H'
 
         no_tiles = board.no_tiles_placed(word, location, orientation)
-        self.assertFalse(no_tiles)
-
-
-
-
-
-            
+        self.assertFalse(no_tiles)            
     
     def test_show_board(self):
         board = Board()
@@ -533,6 +399,201 @@ class TestBoard(unittest.TestCase):
     └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘"""
         self.assertEqual(expected_board, repr(board))
   
+    @patch.object(valid_word, 'is_in_dictionary', return_value = True)
+    def test_has_adjacent_3words_down(self, mock_is_in_dictionary): 
+        board = Board()
+        board.grid[8][5].add_tile(tile=Tile(letter='R', value=1))
+        board.grid[9][5].add_tile(tile=Tile(letter='U', value=1))
+        board.grid[10][5].add_tile(tile=Tile(letter='J', value=1))
+        board.grid[11][5].add_tile(tile=Tile(letter='O', value=1))
+
+        board.grid[8][4].add_tile(tile=Tile(letter='R', value=1))
+        board.grid[9][4].add_tile(tile=Tile(letter='M', value=1))
+        board.grid[10][4].add_tile(tile=Tile(letter='A', value=1))
+
+
+        board.grid[8][8].add_tile(tile=Tile(letter='R', value=1))
+        board.grid[9][8].add_tile(tile=Tile(letter='O', value=1))
+        board.grid[10][8].add_tile(tile=Tile(letter='S', value=1))  
+
+        word = 'CABEZA'
+        location = (7, 3)
+
+        formed_word_list = ['BRUJO', 'ARMA', 'AROS']
+        
+        formed_words = board.find_and_validate_words_adjacent_horizontal(word, location)
+        self.assertTrue(formed_words, formed_word_list)
+
+#Test para up and down neightbors and formed word
+
+    def test_has_neighbor_tile_h_down(self):
+        board = Board()
+        board.grid[6][4].add_tile(tile=Tile(letter='P', value=1))
+        board.grid[6][4].add_tile(tile=Tile(letter='A', value=1))
+        board.grid[6][4].add_tile(tile=Tile(letter='S', value=1))
+        board.grid[6][4].add_tile(tile=Tile(letter='A', value=1))
+
+        word = 'CASA'
+        location = (5, 4)
+        orientation = 'H'
+
+        has_neighbor = board.has_neighbor_tile(word, location, orientation)
+        self.assertTrue(has_neighbor)
+    
+    def test_has_neighbor_tile_h_up(self):
+        board = Board()
+        board.grid[2][4].add_tile(tile=Tile(letter='P', value=1))
+        board.grid[2][5].add_tile(tile=Tile(letter='E', value=1))
+        board.grid[2][6].add_tile(tile=Tile(letter='L', value=1))
+        board.grid[2][7].add_tile(tile=Tile(letter='O', value=1))    
+
+        word = 'MOUSE'
+        location = (3,5)
+        orientation = 'H'
+
+        has_neighbor = board.has_neighbor_tile(word,location,orientation)
+        self.assertTrue(has_neighbor) 
+
+    def has_neighob_tile_v_right(self):
+        board = Board()
+        board.grid[2][4].add_tile(tile=Tile(letter='P', value=1))
+        board.grid[3][4].add_tile(tile=Tile(letter='E', value=1))
+        board.grid[4][4].add_tile(tile=Tile(letter='C', value=1))
+        board.grid[5][4].add_tile(tile=Tile(letter='A', value=1)) 
+        board.grid[6][4].add_tile(tile=Tile(letter='R', value=1))
+
+        word = 'RADIO'
+        location = (3, 2)
+        orientation = 'V'
+
+        has_neighbor = board.has_neighbor_tile(word, location, orientation)
+        self.assertTrue(has_neighbor)
+
+
+    @patch.object(valid_word, 'is_in_dictionary', return_value = True)
+    def test_has_tile_down_form_word(self, mock_is_in_dictionary): #patchear dictionary
+        board = Board()
+        board.grid[1][4].add_tile(tile=Tile(letter='T', value=1))
+        board.grid[2][4].add_tile(tile=Tile(letter='R', value=1))
+        board.grid[3][4].add_tile(tile=Tile(letter='E', value=1))
+        board.grid[4][4].add_tile(tile=Tile(letter='N', value=1))
+
+        word = 'ES'
+        location = (5, 4)
+
+        is_valid, formed_word = board.find_and_validate_words_up_and_down(word, location)
+
+
+        self.assertTrue(is_valid)
+        self.assertListEqual(formed_word, ['T','R','E','N'])
+        
+    
+    @patch.object(valid_word, 'is_in_dictionary', return_value = True)
+    def test_has_tile_up_form_word(self, mock_is_in_dictionary): #patchear dictionary
+      board = Board()
+      board.grid[4][6].add_tile(tile=Tile(letter='M', value=1))
+      board.grid[5][6].add_tile(tile=Tile(letter='A', value=1))
+
+      word = 'GO'
+      location = (2, 6)
+
+      is_valid, formed_word = board.find_and_validate_words_up_and_down(word, location)
+
+      self.assertTrue(is_valid)
+      self.assertListEqual(formed_word, ['M', 'A'])
+    
+    @patch.object(valid_word, 'is_in_dictionary', return_value = False)
+    def test_has_tile_down_fail(self, mock_is_in_dictionary): 
+      board = Board()
+      board.grid[1][4].add_tile(tile=Tile(letter='T', value=1))
+      board.grid[2][4].add_tile(tile=Tile(letter='R', value=1))
+      board.grid[3][4].add_tile(tile=Tile(letter='E', value=1))
+      board.grid[4][4].add_tile(tile=Tile(letter='N', value=1))
+
+      word = 'TEST'
+      location = (5, 4)
+      is_valid= board.find_and_validate_words_up_and_down(word, location)
+
+      self.assertFalse(is_valid)
+    
+    @patch.object(valid_word, 'is_in_dictionary', return_value = True)
+    def test_has_tile_right_form_word(self, mock_is_in_dictionary): #patchar dictionary
+        board = Board()
+        board.grid[3][5].add_tile(tile=Tile(letter='J', value=1))
+        board.grid[3][6].add_tile(tile=Tile(letter='A', value=1))
+        board.grid[3][7].add_tile(tile=Tile(letter='R', value=1))
+        board.grid[3][8].add_tile(tile=Tile(letter='O', value=1))
+
+        word = 'PA'
+        location = (3,3)
+
+        formed_word = board.find_and_validate_words_right_left(word, location)
+        self.assertTrue(formed_word, 'PAJARO')
+    
+    @patch.object(valid_word, 'is_in_dictionary', return_value = True)
+    def test_has_tile_left_form_word(self, mock_is_in_dictionary): #patchar dictionary
+        board = Board()
+        board.grid[7][3].add_tile(tile=Tile(letter='P', value=1))
+        board.grid[7][4].add_tile(tile=Tile(letter='A', value=1))
+        board.grid[7][5].add_tile(tile=Tile(letter='L', value=1))
+
+        word = 'A'
+        location = (7, 6)
+
+        formed_word = board.find_and_validate_words_right_left(word, location)   
+        self.assertTrue(formed_word, 'PALA')  
+    
+    # fail find_and_validate_word_right_left
+    
+    @patch.object(valid_word, 'is_in_dictionary', return_value = False)
+    def test_has_tile_right_fail(self, mock_is_in_dictionary): #patchar dictionary
+        board = Board()
+        board.grid[7][3].add_tile(tile=Tile(letter='P', value=1))
+        board.grid[7][4].add_tile(tile=Tile(letter='A', value=1))
+        board.grid[7][5].add_tile(tile=Tile(letter='L', value=1))
+
+        word = 'X'
+        location = (7, 2)
+
+        formed_word = board.find_and_validate_words_right_left(word, location)
+        self.assertFalse(formed_word)
+
+
+#Test para left and right neightbors and formed word
+
+    def test_has_neighbor_tile_v_left(self):
+        board = Board()
+        board.grid[2][4].add_tile(tile=Tile(letter='P', value=1))
+        board.grid[3][4].add_tile(tile=Tile(letter='E', value=1))
+        board.grid[4][4].add_tile(tile=Tile(letter='L', value=1))
+        board.grid[5][4].add_tile(tile=Tile(letter='O', value=1)) 
+        board.grid[6][4].add_tile(tile=Tile(letter='L', value=1))
+        board.grid[7][4].add_tile(tile=Tile(letter='O', value=1))   
+
+        word = 'CAMPERA'
+        location = (2,5)
+        orientation = 'V'
+
+        has_neighbor = board.has_neighbor_tile(word, location, orientation)
+        self.assertTrue(has_neighbor)
+    
+    def has_neighob_tile_v_right(self):
+        board = Board()
+        board.grid[2][4].add_tile(tile=Tile(letter='P', value=1))
+        board.grid[3][4].add_tile(tile=Tile(letter='E', value=1))
+        board.grid[4][4].add_tile(tile=Tile(letter='C', value=1))
+        board.grid[5][4].add_tile(tile=Tile(letter='A', value=1)) 
+        board.grid[6][4].add_tile(tile=Tile(letter='R', value=1))
+
+        word = 'RADIO'
+        location = (3, 2)
+        orientation = 'V'
+
+        has_neighbor = board.has_neighbor_tile(word, location, orientation)
+        self.assertTrue(has_neighbor)
+
+  
+
 
 class TestCalculateWordValue(unittest.TestCase):
     
@@ -591,3 +652,5 @@ class TestCalculateWordValue(unittest.TestCase):
         ]
         value = board.calculate_word_score(word)
         self.assertEqual(value, 8)
+    
+

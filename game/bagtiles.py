@@ -4,7 +4,8 @@ from game.tiles import Tile
 class BagTiles:
     def __init__(self):
         self.tiles = [
-            ('?', 0, 2),
+        #letra, valor, cantidad
+            ('?', 0, 2),          
             ('A', 1, 12),
             ('E', 1, 12),
             ('I', 1, 6),

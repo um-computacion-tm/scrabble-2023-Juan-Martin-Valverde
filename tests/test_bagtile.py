@@ -12,11 +12,6 @@ class TestBagTiles(unittest.TestCase):
         self.assertEqual(patch_shuffle.call_count,1)
         self.assertEqual(patch_shuffle.call_args[0][0],bag.tiles)
 
-    def test_calculate_total(self):
-        bag = BagTiles()
-        tiles_created = bag.calculate_tiles()
-        self.assertEqual(len(tiles_created),103)
-
     def test_take(self):
         bag = BagTiles()
         tiles = bag.take(2)
@@ -29,6 +24,10 @@ class TestBagTiles(unittest.TestCase):
         bag.put(put_tiles)
         self.assertEqual(len(bag.total_tiles),105)
 
-    
-        
+    def test_calculate_tiles(self):
+        bag = BagTiles()
+        tiles_created = bag.calculate_tiles()
+        self.assertEqual(len(tiles_created),103)
 
+    
+    
