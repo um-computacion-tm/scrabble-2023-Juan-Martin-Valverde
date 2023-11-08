@@ -16,7 +16,7 @@ class TestMainMenu(unittest.TestCase):
 
     @patch('builtins.input', side_effect=['4', '2'])
     def test_get_player_count_invalid_then_valid(self, input):
-        self.assertEqual(self.menu.get_player_count(), 2)
+        self.assertEqual(self.menu.get_player_count(), 4)
 
     @patch('builtins.print')
     def test_welcome_message(self, mock_print):
@@ -40,10 +40,10 @@ class TestMainMenu(unittest.TestCase):
             unittest.mock.call("----------------------------------------Tabla de Scrabble-----------------------------------------"),
             unittest.mock.call("Test Board"),
             unittest.mock.call("-------------------------------------------Opciones---------------------------------------------"),
-            unittest.mock.call("Preciona 1 para poner palabra"),
+            unittest.mock.call("Preciona 1 para poner una palabra"),
             unittest.mock.call("Preciona 2 para cambiar tus letras"),
             unittest.mock.call("Preciona 3 para cambiar todas tus letras"),
-            unittest.mock.call("Preciona 4 para saltear turno"),
+            unittest.mock.call("Preciona 4 para saltear el turno"),
             unittest.mock.call("Preciona 5 para terminar el juego"),
             unittest.mock.call("-----------------------------------------------------------------------------------------------"),
             unittest.mock.call("Player 1")
@@ -100,73 +100,28 @@ class TestMainMenu2(unittest.TestCase):
     
     @patch('builtins.input', return_value='1,2,3')
     def test_exchange_tiles(self, input):
-        # Create a MainMenu instance
+        
         menu = Main_Menu()
-
-        # Mock the scrabble object and its exchange_tiles method
+        
         menu.scrabble = unittest.mock.Mock()
         menu.scrabble.exchange_tiles.return_value = ['A', 'B', 'C']
 
-        # Call the method to test
         menu.handle_user_input(2)
 
-        # Check that the exchange_tiles method was called with the correct argument
         menu.scrabble.exchange_tiles.assert_called_once_with([1, 2, 3])
         
-        # Check that the returned tiles are as expected
         self.assertEqual(menu.exchanged_tiles, ['A', 'B', 'C'])
         
     def test_exchange_all_tiles(self):
-        # Create a MainMenu instance
+        
         menu = Main_Menu()
 
-        # Mock the scrabble object and its exchange_all_tiles method
         menu.scrabble = unittest.mock.Mock()
         menu.scrabble.exchange_all_tiles.return_value = ['A', 'B', 'C']
 
-        # Call the method to test
         exchanged_tiles = menu.scrabble.exchange_all_tiles()
 
-        # Check that the exchange_all_tiles method was called
         menu.scrabble.exchange_all_tiles.assert_called_once()
 
-        # Check that the returned tiles are as expected
         self.assertEqual(exchanged_tiles, ['A', 'B', 'C'])
         
-        """
-    @patch.object(Main_Menu, 'welcome_message')
-    @patch.object(Main_Menu, 'get_player_count', return_value=2)
-    @patch.object(Main_Menu, 'show_game_options')
-    @patch('builtins.input', return_value='1')
-    @patch.object(Main_Menu, 'handle_user_input')
-    def test_client(self, mock_handle_user_input, mock_input, mock_show_game_options, mock_get_player_count, mock_welcome_message):
-        # Create a mock ScrabbleGame instance
-        mock_scrabble = Mock()
-        mock_scrabble.is_playing.return_value = False
-        mock_scrabble.is_playing.call_count = 0
-
-        def side_effect():
-            if mock_scrabble.is_playing.call_count < 2:
-                mock_scrabble.is_playing.call_count += 1
-                return True
-            else:
-                return False
-
-        mock_scrabble.is_playing.side_effect = side_effect        
-        mock_scrabble.next_turn.return_value = None
-        mock_scrabble.start_game.return_value = None
-
-        # Replace the ScrabbleGame constructor with a function that returns our mock instance
-        with patch('game.mainmenu.ScrabbleGame', return_value=mock_scrabble):
-            menu = Main_Menu()
-            menu.client()
-
-        # Check that the methods were called as expected
-        mock_welcome_message.assert_called_once()
-        mock_get_player_count.assert_called_once()
-        mock_scrabble.next_turn.assert_called_once()
-        mock_scrabble.start_game.assert_called_once()
-        mock_show_game_options.assert_called_once()
-        mock_input.assert_called_once_with("Elige tus opciones: ")
-        mock_handle_user_input.assert_called_once_with(1)
-        """

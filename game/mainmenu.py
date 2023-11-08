@@ -2,20 +2,20 @@ from game.scrabblegame import ScrabbleGame
 
 class Main_Menu():
     def __init__(self):
-        self.scrabble = None
+        self.scrabble = ScrabbleGame( total_players=self.get_player_count())
 
     def welcome_message(self):
         print("--------------------------------------------------------------------------------------------")
         print("------------------------------------Bienvenido a Scrabble-------------------------------------")
-
+    
     def get_player_count(self):
         while True:
             try:
-                player_count = int(input("Introduce el numero de jugadores (1-3): "))
-                if 1 <= player_count <= 3:
+                player_count = int(input("Introduce el numero de jugadores (2-4): "))
+                if 2 <= player_count <= 4:
                     return player_count
                 else:
-                    print("Numero de jugadores invalido. Porfavor ingrece un numero entre 1 y 3")
+                    print("Numero de jugadores invalido. Porfavor ingrece un numero entre 2 y 4")
             except ValueError:
                 print("Valor invalido. Por favor ingresa un NUMERO VALIDO")
 
@@ -23,11 +23,12 @@ class Main_Menu():
         print("----------------------------------------Tabla de Scrabble-----------------------------------------")
         print(self.scrabble.board)
         print("-------------------------------------------Opciones---------------------------------------------")
-        print("Preciona 1 para poner palabra")
+        print("Preciona 1 para poner una palabra")
         print("Preciona 2 para cambiar tus letras")
         print("Preciona 3 para cambiar todas tus letras")
-        print("Preciona 4 para saltear turno")
-        print("Preciona 5 para terminar el juego")
+        print("Preciona 4 para cambiar el comodin")
+        print("Preciona 5 para saltear el turno")
+        print("Preciona 6 para terminar el juego")
         print("-----------------------------------------------------------------------------------------------")
         print(self.scrabble.get_current_player())
 
