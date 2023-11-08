@@ -82,3 +82,5 @@ class TestCell(unittest.TestCase):
         tile = Tile('A', 1)
         cell = Cell(tile=tile, multiplier_type='word', multiplier=2)
         assert cell.calculate_letter_score() == 1
+        
+        #/3/3/

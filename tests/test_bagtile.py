@@ -28,6 +28,8 @@ class TestBagTiles(unittest.TestCase):
         bag = BagTiles()
         tiles_created = bag.calculate_tiles()
         self.assertEqual(len(tiles_created),103)
+        
+        #///
 
     
     
