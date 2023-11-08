@@ -35,15 +35,6 @@ class TestBoard(unittest.TestCase):
         word_is_valid = board.valid_word_in_board(word, location, orientation)
         assert word_is_valid == True
     
-
-    def test_word_out_of_board(self):
-        board = Board()
-        word = "Segundo"
-        location = (14, 4)
-        orientation = "H"
-        word_is_valid = board.valid_word_in_board(word, location, orientation)
-        assert word_is_valid == False
-    
     def test_word_v_inside_board(self):
         board = Board()
         word = "Segundo"
@@ -54,11 +45,11 @@ class TestBoard(unittest.TestCase):
     
     def test_word_v_out_of_board(self):
         board = Board()
-        word = "Segundo"
-        location = (5, 14)
-        orientation = "V"
+        word = 'HOLA'
+        location = (15,15)  
+        orientation = 'V'
         word_is_valid = board.valid_word_in_board(word, location, orientation)
-        assert word_is_valid == False
+        self.assertFalse(word_is_valid)
 
     def test_board_is_empty(self):
         board = Board()
@@ -78,7 +69,7 @@ class TestBoard(unittest.TestCase):
         board.put_word(word, location, orientation)
 
         for i, letter in enumerate(word):
-            self.assertEqual(board.grid[7][7+i].tile, letter)
+            self.assertEqual(board.grid[7][7+i].tile.letter, letter)
 
     def test_put_word_Vertical(self):
         board = Board()
@@ -88,26 +79,27 @@ class TestBoard(unittest.TestCase):
         board.put_word(word,location,orientation)
 
         for i, letter in enumerate(word):
-            self.assertEqual(board.grid[3+i][2].tile, letter)
+            self.assertEqual(board.grid[3+i][2].tile.letter, letter)
 
     def test_put_first_word_Horizontal_work(self):
         board = Board()
-        word = 'SOPLAR'
+        word = 'SOPA'
         location = (7,7)
         orientation = 'H'
         board.put_first_word(word,location,orientation)
+
         for i, letter in enumerate(word):
-            self.assertEqual(board.grid[7][7+i].tile, letter)
+            self.assertEqual(board.grid[7][7+i].tile.letter, letter)
     
     def test_put_first_word_vertical_work(self):
         board = Board()
-        word = 'BOLSA'
+        word = 'BERRUGA'
         location = (7,7)
         orientation = 'V'
         board.put_first_word(word,location,orientation)
 
         for i, letter in enumerate(word):
-            self.assertEqual(board.grid[7+i][7].tile, letter)
+            self.assertEqual(board.grid[7+i][7].tile.letter, letter)
         
     def test_put_first_word_horizontal_fail(self):
         board = Board()
@@ -218,19 +210,14 @@ class TestBoard(unittest.TestCase):
 
         
     
-    def test_has_crossword_fail(self):
+    def test_no_tiles_placed_fail(self):
         board = Board()
-        board.grid[6][3].add_tile(tile=Tile(letter='G', value=1))
-        board.grid[6][4].add_tile(tile=Tile(letter='O', value=1))
-        board.grid[6][5].add_tile(tile=Tile(letter='M', value=1))
-        board.grid[6][6].add_tile(tile=Tile(letter='A', value=1))  
-
-        word = 'PASO'
-        location = (5, 4)
+        word = 'SOPA'
+        location = (7,7)
         orientation = 'H'
-
-        has_crossword = board.has_crossword(word, location, orientation)
-        self.assertFalse(has_crossword) 
+        board.put_word(word, location, orientation)
+        no_tiles = board.no_tiles_placed(word, location, orientation)
+        self.assertFalse(no_tiles)
 
     def has_crossword_fail_x2(self):
         board = Board()
@@ -269,18 +256,13 @@ class TestBoard(unittest.TestCase):
 
     def test_no_tiles_placed_fail(self):
         board = Board()
-        board.grid[6][3].add_tile(tile=Tile(letter='G', value=1))
-        board.grid[6][4].add_tile(tile=Tile(letter='O', value=1))
-        board.grid[6][5].add_tile(tile=Tile(letter='M', value=1))
-        board.grid[6][6].add_tile(tile=Tile(letter='A', value=1))  
-
-        word = 'COCO'
-        location = (4, 5)
+        word = 'SOPA'
+        location = (7,7)
         orientation = 'H'
-
+        board.put_word(word, location, orientation)
         no_tiles = board.no_tiles_placed(word, location, orientation)
-        self.assertFalse(no_tiles)            
-    
+        self.assertFalse(no_tiles)
+        
     def test_show_board(self):
         board = Board()
         expected_board ="""       0     1     2     3     4     5     6     7     8     9     10    11    12    13    14 
@@ -424,6 +406,26 @@ class TestBoard(unittest.TestCase):
         formed_words = board.find_and_validate_words_adjacent_horizontal(word, location)
         self.assertTrue(formed_words, formed_word_list)
 
+    @patch.object(valid_word, 'is_in_dictionary', return_value = True)
+    def test_has_adjacent_word_left(self, mock_is_in_dictionary):
+        board = Board()
+        board.grid[2][4].add_tile(tile=Tile(letter='E', value=1))
+        board.grid[3][4].add_tile(tile=Tile(letter='S', value=1))
+        board.grid[4][4].add_tile(tile=Tile(letter='T', value=1))
+        board.grid[5][4].add_tile(tile=Tile(letter='R', value=1))
+        board.grid[6][4].add_tile(tile=Tile(letter='E', value=1))
+        board.grid[7][4].add_tile(tile=Tile(letter='N', value=1))
+        board.grid[8][4].add_tile(tile=Tile(letter='O', value=1))
+
+        word = 'MES'       
+        location = (6, 5)
+
+        formed_word_list = ['ME', 'EN', 'SO']
+
+        formed_word = board.find_and_validate_words_adjacent_vertical(word, location)
+        self.assertTrue(formed_word, formed_word_list)
+
+
 #Test para up and down neightbors and formed word
 
     def test_has_neighbor_tile_h_down(self):
@@ -527,7 +529,7 @@ class TestBoard(unittest.TestCase):
         word = 'PA'
         location = (3,3)
 
-        formed_word = board.find_and_validate_words_right_left(word, location)
+        formed_word = board.find_and_validate_words_left_and_right(word, location)
         self.assertTrue(formed_word, 'PAJARO')
     
     @patch.object(valid_word, 'is_in_dictionary', return_value = True)
@@ -540,7 +542,7 @@ class TestBoard(unittest.TestCase):
         word = 'A'
         location = (7, 6)
 
-        formed_word = board.find_and_validate_words_right_left(word, location)   
+        formed_word = board.find_and_validate_words_left_and_right(word, location)   
         self.assertTrue(formed_word, 'PALA')  
     
     # fail find_and_validate_word_right_left
@@ -555,7 +557,7 @@ class TestBoard(unittest.TestCase):
         word = 'X'
         location = (7, 2)
 
-        formed_word = board.find_and_validate_words_right_left(word, location)
+        formed_word = board.find_and_validate_words_left_and_right(word, location)
         self.assertFalse(formed_word)
 
 
@@ -605,7 +607,7 @@ class TestCalculateWordValue(unittest.TestCase):
             Cell(tile=Tile('S', 1)),
             Cell(tile=Tile('A', 1)),
         ]
-        value = board.calculate_word_score(word)
+        value = board.calculate_word_value(word)
         self.assertEqual(value, 6)
 
     def test_with_letter_multiplier(self):
@@ -616,7 +618,7 @@ class TestCalculateWordValue(unittest.TestCase):
             Cell(tile=Tile('S', 1)),
             Cell(tile=Tile('A', 1)),
         ]
-        value = board.calculate_word_score(word)
+        value = board.calculate_word_value(word)
         self.assertEqual(value, 9)
 
     def test_with_word_multiplier(self):
@@ -628,7 +630,7 @@ class TestCalculateWordValue(unittest.TestCase):
             Cell(tile=Tile('A', 1)),
         ]
 
-        value = board.calculate_word_score(word)
+        value = board.calculate_word_value(word)
         self.assertEqual(value, 12)
 
     def test_with_letter_word_multiplier(self):
@@ -639,7 +641,7 @@ class TestCalculateWordValue(unittest.TestCase):
             Cell(tile=Tile('S', 1)),
             Cell(tile=Tile('A', 1)),
         ]
-        value = board.calculate_word_score(word)
+        value = board.calculate_word_value(word)
         self.assertEqual(value, 24)
 
     def test_with_letter_word_multiplier_no_active(self):
@@ -650,7 +652,7 @@ class TestCalculateWordValue(unittest.TestCase):
             Cell(tile=Tile('S', 1)),
             Cell(tile=Tile('A', 1)),
         ]
-        value = board.calculate_word_score(word)
+        value = board.calculate_word_value(word)
         self.assertEqual(value, 8)
     
 

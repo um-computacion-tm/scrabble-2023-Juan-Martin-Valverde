@@ -180,12 +180,12 @@ class TestPlayer1(unittest.TestCase):
             Tile(letter='C', value=3),
         ]
 
-        player.change_comodin_to_tile('M')
+        player.change_comodin_to_tiles('M')
         self.assertEqual(player.playertiles[1].letter, 'M')
         self.assertEqual(player.playertiles[1].value, 0)
 
         with self.assertRaises(Exception) as context:
-            player.change_comodin_to_tile('E')
+            player.change_comodin_to_tiles('E')
         self.assertEqual(
             str(context.exception), "No tienes un comodin en tu atril.")
 
@@ -195,7 +195,7 @@ class TestPlayer1(unittest.TestCase):
             Tile(letter='C', value=3),
         ]
         with self.assertRaises(Exception) as context:
-            player.change_comodin_to_tile('E')
+            player.change_comodin_to_tiles('E')
         self.assertEqual(
             str(context.exception), "No tienes un comodin en tu atril.")
 

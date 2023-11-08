@@ -51,7 +51,7 @@ class Player:
                 return True
         return False
     
-    def change_comodin_to_tile(self, letter):
+    def change_comodin_to_tiles(self, letter):
         comodin_tile = next((tile for tile in self.playertiles if tile.letter == '?'), None)
         if comodin_tile:
             comodin_tile.letter = letter.upper()

@@ -1,5 +1,6 @@
 from game.mainmenu import Main_Menu
 from game.scrabblegame import ScrabbleGame  
+
 def Begin_game():
     main_menu = Main_Menu() 
        
