@@ -17,3 +17,4 @@ class valid_word:
         else:
             raise ValueError("La palabra no puede ser None.")        
         
+#/21

@@ -22,7 +22,7 @@ class TestMainMenu(unittest.TestCase):
     def test_welcome_message(self, mock_print):
         self.menu.welcome_message()
         calls = [ 
-            unittest.mock.call("--------------------------------------------------------------------------------------------"),
+            unittest.mock.call("______________________________________________________________________________________________"),
             unittest.mock.call("------------------------------------Bienvenido a Scrabble-------------------------------------")
         ]
         mock_print.assert_has_calls(calls)
@@ -37,15 +37,16 @@ class TestMainMenu(unittest.TestCase):
     def test_show_game_options(self, mock_print):
         self.menu.show_game_options()
         calls = [ 
-            unittest.mock.call("----------------------------------------Tabla de Scrabble-----------------------------------------"),
+            unittest.mock.call("--------------------------------------Tabla de Scrabble-----------------------------------"),
             unittest.mock.call("Test Board"),
-            unittest.mock.call("-------------------------------------------Opciones---------------------------------------------"),
-            unittest.mock.call("Preciona 1 para poner una palabra"),
-            unittest.mock.call("Preciona 2 para cambiar tus letras"),
-            unittest.mock.call("Preciona 3 para cambiar todas tus letras"),
-            unittest.mock.call("Preciona 4 para saltear el turno"),
-            unittest.mock.call("Preciona 5 para terminar el juego"),
-            unittest.mock.call("-----------------------------------------------------------------------------------------------"),
+            unittest.mock.call("|------------------------------------------Opciones------------------------------------------|"),
+            unittest.mock.call("|Preciona 1 para poner una palabra                                                           |"),
+            unittest.mock.call("|Preciona 2 para cambiar tus letras                                                          |"),
+            unittest.mock.call("|Preciona 3 para cambiar todas tus letras                                                    |"),
+            unittest.mock.call("|Preciona 4 para cambiar el comodin                                                          |"),
+            unittest.mock.call("|Preciona 5 para saltear el turno                                                            |"),
+            unittest.mock.call("|Preciona 6 para terminar el juego                                                           |"),
+            unittest.mock.call("|____________________________________________________________________________________________|"),
             unittest.mock.call("Player 1")
         ]
         mock_print.assert_has_calls(calls)

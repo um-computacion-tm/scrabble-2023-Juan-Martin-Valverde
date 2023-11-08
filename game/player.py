@@ -61,3 +61,5 @@ class Player:
 
     def calculate_new_score (self, score):
         self.score += score
+
+#23/32

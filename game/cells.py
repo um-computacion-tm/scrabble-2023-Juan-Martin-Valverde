@@ -29,3 +29,5 @@ class Cell:
             return f'{"W" if self.multiplier_type == "word" else "L"}x{self.multiplier}'
         else:
             return '   '
+        
+        #.asdad

@@ -2,10 +2,10 @@ from game.scrabblegame import ScrabbleGame
 
 class Main_Menu():
     def __init__(self):
-        self.scrabble = ScrabbleGame( total_players=self.get_player_count())
+        self.scrabble = ScrabbleGame
 
     def welcome_message(self):
-        print("--------------------------------------------------------------------------------------------")
+        print("______________________________________________________________________________________________")
         print("------------------------------------Bienvenido a Scrabble-------------------------------------")
     
     def get_player_count(self):
@@ -20,16 +20,16 @@ class Main_Menu():
                 print("Valor invalido. Por favor ingresa un NUMERO VALIDO")
 
     def show_game_options(self):
-        print("----------------------------------------Tabla de Scrabble-----------------------------------------")
+        print("--------------------------------------Tabla de Scrabble-----------------------------------"),
         print(self.scrabble.board)
-        print("-------------------------------------------Opciones---------------------------------------------")
-        print("Preciona 1 para poner una palabra")
-        print("Preciona 2 para cambiar tus letras")
-        print("Preciona 3 para cambiar todas tus letras")
-        print("Preciona 4 para cambiar el comodin")
-        print("Preciona 5 para saltear el turno")
-        print("Preciona 6 para terminar el juego")
-        print("-----------------------------------------------------------------------------------------------")
+        print("|------------------------------------------Opciones------------------------------------------|"),
+        print("|Preciona 1 para poner una palabra                                                           |"),        
+        print("|Preciona 2 para cambiar tus letras                                                          |"),
+        print("|Preciona 3 para cambiar todas tus letras                                                    |"),
+        print("|Preciona 4 para cambiar el comodin                                                          |"),
+        print("|Preciona 5 para saltear el turno                                                            |"),
+        print("|Preciona 6 para terminar el juego                                                           |"),
+        print("|____________________________________________________________________________________________|")
         print(self.scrabble.get_current_player())
 
     def get_word_input(self):
