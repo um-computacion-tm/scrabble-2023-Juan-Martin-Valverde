@@ -1,11 +1,10 @@
 import random
-from game.tiles import Tile
+from game.tile import Tile
 
 class BagTiles:
     def __init__(self):
         self.tiles = [
-        #letra, valor, cantidad
-            ('?', 0, 2),          
+            ('?', 0, 2),
             ('A', 1, 12),
             ('E', 1, 12),
             ('I', 1, 6),
@@ -29,12 +28,13 @@ class BagTiles:
             ('Q', 5, 1),
             ('J', 8, 1),
             ('Ñ', 8, 1),
-            ('X', 10, 1),
+            ('X', 8, 1),
             ('Z', 10, 1),
         ]
+
         self.total_tiles = self.calculate_tiles()
-        random.shuffle(self.tiles)
-        
+        random.shuffle(self.total_tiles)
+
     def calculate_tiles(self):
         total_tiles = []
         for letter, value, total in self.tiles:
@@ -43,13 +43,11 @@ class BagTiles:
         
     def take(self, count):
         tiles = []
-        if len(self.total_tiles) > 0:
-            for i in range(count):
-                tile = self.total_tiles.pop()
-                tiles.append(tile)
+        for _ in range(count):
+            tiles.append(self.total_tiles.pop())
         return tiles
-            
-    def put(self, tiles):  
+    
+    def put(self, tiles):
+        random.shuffle(self.total_tiles)
         self.total_tiles.extend(tiles)
-
-#/
+        random.shuffle(self.total_tiles)
