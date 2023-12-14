@@ -1,6 +1,4 @@
 Juan Martin Valverde 62123
-NI TE GASTES EN REVISARLO, NO FUNCIONA nos vemos en el 2024
-
 
 # -CircleCi Main-
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/um-computacion-tm/scrabble-2023-Juan-Martin-Valverde/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/um-computacion-tm/scrabble-2023-Juan-Martin-Valverde/tree/main)

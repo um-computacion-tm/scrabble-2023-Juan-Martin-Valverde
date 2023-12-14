@@ -1,7 +1,6 @@
 import unittest
-from game.bagtiles import BagTiles
 from unittest.mock import patch
-
+from game.bagtile import BagTiles
 
 class TestBagTiles(unittest.TestCase):
 
@@ -10,7 +9,12 @@ class TestBagTiles(unittest.TestCase):
         bag = BagTiles()
         self.assertEqual(len(bag.total_tiles),103)
         self.assertEqual(patch_shuffle.call_count,1)
-        self.assertEqual(patch_shuffle.call_args[0][0],bag.tiles)
+        self.assertEqual(patch_shuffle.call_args[0][0],bag.total_tiles,)
+
+    def test_calculate_total(self):
+        bag = BagTiles()
+        tiles_created = bag.calculate_tiles()
+        self.assertEqual(len(tiles_created),103)
 
     def test_take(self):
         bag = BagTiles()
@@ -23,13 +27,4 @@ class TestBagTiles(unittest.TestCase):
         put_tiles = [('Z', 10),('U', 1)]
         bag.put(put_tiles)
         self.assertEqual(len(bag.total_tiles),105)
-
-    def test_calculate_tiles(self):
-        bag = BagTiles()
-        tiles_created = bag.calculate_tiles()
-        self.assertEqual(len(tiles_created),103)
-        
-        #///
-
-    
     

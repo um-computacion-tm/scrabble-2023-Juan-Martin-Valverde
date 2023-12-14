@@ -1,5 +1,5 @@
-from game.bagtiles import BagTiles
-from game.tiles import Tile
+from game.bagtile import BagTiles
+from game.tile import Tile
 import random
 
 class Player:
@@ -11,6 +11,15 @@ class Player:
 
     def reset (self):
         self.playertiles = []
+
+    def has_letter(self, word): 
+        tiles = [tile.letter for tile in self.playertiles]
+        for letter in word:
+            if letter in tiles:
+                tiles.remove(letter)
+            else:
+                return False
+        return True
     
     def get_tiles(self, bag:BagTiles, count):
         self.playertiles.extend(bag.take(count))
@@ -27,39 +36,29 @@ class Player:
             return played_tiles
         else:
             return False
-
-    def has_letter(self, word): 
-        tiles = [tile.letter for tile in self.playertiles]
-        for letter in word:
-            if letter in tiles:
-                tiles.remove(letter)
-            else:
-                return False
-        return True
-
-    def show_tiles(self):
-        atril = " | ".join(f"{tile.letter}:{tile.value}" for tile in self.playertiles)
-        indices = f"indx:" + " " * 3 + "  ".join(str(i + 1).center(4) for i in range(len(self.playertiles)))
-        return (f"Player ID: {self.id}\nPuntaje: {self.score}\nAtril: {atril} |\n{indices}").rstrip()
-
-    def __repr__(self):
-        return self.show_tiles()
     
-    def player_has_comodin(self):
+    def score_update (self, score):
+        self.score += score
+    
+    def has_joker(self):
         for tile in self.playertiles:
             if tile.letter == '?':
                 return True
         return False
     
-    def change_comodin_to_tiles(self, letter):
-        comodin_tile = next((tile for tile in self.playertiles if tile.letter == '?'), None)
-        if comodin_tile:
-            comodin_tile.letter = letter.upper()
-            comodin_tile.value = 0
+    def convert_joker_to_letter(self, letter):
+        joker_tile = next((tile for tile in self.playertiles if tile.letter == '?'), None)
+        if joker_tile:
+            joker_tile.letter = letter.upper()
+            joker_tile.value = 0
         else:
-            raise Exception("No tienes un comodin en tu atril.")
+            raise Exception("Player does not have a Joker in their tiles.")
+        
+    def show_tiles(self):
+        atril = " | ".join(f"{tile.letter}:{tile.value}" for tile in self.playertiles)
+        indices = f"indx:" + " " * 3 + "  ".join(str(i + 1).center(4) for i in range(len(self.playertiles)))
+        return f"Player ID: {self.id}\nScore: {self.score}\nAtril: {atril} |\n{indices}"
 
-    def calculate_new_score (self, score):
-        self.score += score
 
-#23/32
+    def __repr__(self):
+        return self.show_tiles()

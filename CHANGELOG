@@ -193,13 +193,13 @@ _______________________
 - TEST COVERTURE:     | 
 ______________________|
 BagTiles = %100       |
-Board = %95           |
-Cells = %100          |
+Board = %99           |
+Cells = %96          |
 Dictionary = %100     |
-MainMenu = %82        |
+MainMenu = %75        |
 Player = %100         |
 ScrabbleGame = %83    |
 Tile = %100           |
 ______________________|
-GlOBAL = %90          |
+GlOBAL = %91          |
 ______________________|

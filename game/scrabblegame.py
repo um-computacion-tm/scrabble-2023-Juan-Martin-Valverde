@@ -1,8 +1,8 @@
-from game.bagtiles import BagTiles
+from game.bagtile import BagTiles
 from game.player import Player
 from game.board import Board
-from game.dictionary import valid_word
-from game.tiles import Tile
+from game.dicctionary import PyraeDict
+from game.tile import Tile
 
 
 class InvalidWordException(Exception):
@@ -22,8 +22,7 @@ class ScrabbleGame():
         self.current_player = None
         self.round = 1
         self.score = []
-        self.dict = valid_word() 
-        
+        self.dict = PyraeDict() #nuevo
 
     def is_playing(self):
         if len(self.bag_tiles.total_tiles) > 0:
@@ -54,14 +53,15 @@ class ScrabbleGame():
                 exchanged_tiles.append(player.playertiles[i - 1])
                 player.playertiles[i - 1] = new_tiles.pop(0)
 
+            # Devuelve las fichas originales al saco
             self.bag_tiles.put(old_tiles)
 
             return exchanged_tiles
         else:
-            print("Valor invalido de la letra. por favor ingresa un valor entre 1 y 7 (1 para tu primer letra 7 para tu ultima letra.")
+            print("Invalid tile indices. Please enter numbers from 1 to 7.")
             return []
     
-    def exchange_all_tiles(self): 
+    def exchange_all_tiles(self): #test
         self.current_player
         all_tile_indx=list(range(1,8))
         exchanged_tiles = self.exchange_tiles(all_tile_indx)
@@ -78,22 +78,23 @@ class ScrabbleGame():
     def start_game(self): 
         return self.round_set()
 
-    def validate_word(self, word, location, orientation): 
+    def validate_word(self, word, location, orientation): #test
         if not self.current_player.has_letter(word):
-            raise InvalidWordNoLetters("No tienes las letras necesaria para esta palabra.") 
-
+            raise InvalidWordNoLetters("You don't have the tiles to form this word")   
         if not self.board.valid_word_in_board(word, location, orientation):
-            raise InvalidPlaceWordException("La palabra se sale del tablero.")
+            raise InvalidPlaceWordException("Your word exceeds the Board")
         if not self.board.valid_word_in_place(word, location, orientation):
-            raise InvalidPlaceWordException("Posicion no valida en el tablero.")
+            raise InvalidPlaceWordException("No valid position in board or No valid word, please check your position and word")
 
+    # arreglar con clase Dict
     def validate_word_first_round(self, word, location, orientation):
         if not self.current_player.has_letter(word):
-            raise InvalidWordNoLetters("No tienes las letras necesaria para esta palabra.")
-        if not self.dict.is_in_dictionary(word): 
-            raise InvalidWordException("La palabra no existe.")
+            raise InvalidWordNoLetters("You don't have the tiles to form this word")
+        if not self.dict.is_in_dictionary(word): #ver con PyraeDict
+            raise InvalidWordException("Word doesn't exist")
         if not self.board.valid_word_in_board(word, location, orientation):
-            raise InvalidPlaceWordException("La palabra se sale del tablero.")
+            raise InvalidPlaceWordException("Your word exceeds the Board")
+
     
     def play_first_round(self, word, location, orientation): 
         self.board.put_first_word(word, location, orientation)            
@@ -102,7 +103,7 @@ class ScrabbleGame():
         total_score = self.board.calculate_word_value(word_cells)  
         self.current_player.score += total_score
         self.round += 1
-        self.next_turn()
+        self.next_turn() #cambio
 
     def play(self, word, location, orientation): 
         self.board.put_word(word, location, orientation)            
@@ -110,38 +111,36 @@ class ScrabbleGame():
         word_cells = self.board.get_word_cells(word, location, orientation)
         total_score = self.board.calculate_word_value(word_cells)
         self.current_player.score += total_score 
-        self.next_turn() 
+        self.next_turn() #cambio
 
     
-    def get_current_player(self): 
+    def get_current_player(self): #test
         return self.players[self.current_player.id]
 
-    def player_has_comodin(self):
+    def has_joker_current_player(self):
         current_player = self.get_current_player()
-        return current_player.player_has_comodin()
+        return current_player.has_joker()
 
-    def change_comodin_to_tiles(self, letter):
+    def convert_joker_to_letter(self, letter):
         current_player = self.get_current_player()
-        current_player.change_comodin_to_tiles(letter)
+        current_player.convert_joker_to_letter(letter)
 
-    def get_comodin_index(self):
-        indice_comodin = [index for index, tile in enumerate(self.current_player.playertiles) if tile.letter == '?']
-        if indice_comodin:
-            return indice_comodin[0]
+    def get_joker_index(self):
+        joker_indices = [index for index, tile in enumerate(self.current_player.playertiles) if tile.letter == '?']
+        if joker_indices:
+            return joker_indices[0]
         else:
-            raise ValueError("No esta el comodin entre tus letras.")
+            raise ValueError("No Joker tile found in the player's tiles.")
     
     def get_valid_letter_input(self):
-        new_letter = input("Ingresa la letra que deseas que sea el comodin(en mayusculas): ").upper()
-        if new_letter.isalpha() and len(new_letter) == 1 and new_letter.isupper():
+        new_letter = input("Enter the letter you want to assign to the Joker: ").upper()
+        if new_letter.isalpha() and len(new_letter) == 1 and new_letter.isupper() and new_letter not in ['K', 'W']:
             return new_letter
         else:
-            raise ValueError("Entrada incorrecta, tiene que se en MAYUSCULAS para que sea valido.")
+            raise ValueError("Invalid input. Please enter a valid uppercase letter.")
     
     def winner(self):
         max_score = max(player.score for player in self.players)
         winning_players = [player for player in self.players if player.score == max_score]
         
         return winning_players[0] if winning_players else None
-    
-    #//2/2
